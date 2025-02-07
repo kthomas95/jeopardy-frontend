@@ -1,0 +1,3 @@
+mutation MakeMove($playerName: String!, $gameMoveString: String!) {
+    makeMove(playerName: $playerName, gameMoveString: $gameMoveString)
+}

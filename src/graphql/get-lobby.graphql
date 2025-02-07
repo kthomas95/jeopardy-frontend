@@ -1,0 +1,7 @@
+subscription GetPendingGame {
+    getPendingGame {
+        players {
+            playerName
+        }
+    }
+}

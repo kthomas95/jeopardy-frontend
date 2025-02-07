@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@layer utilities {
+    .center {
+        justify-content: center;
+        align-items: center;
+    }
+}

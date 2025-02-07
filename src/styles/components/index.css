@@ -1,0 +1,18 @@
+@import "./button.css";
+@import "./card.css";
+@import "./checkbox.css";
+
+@layer components {
+    .interactive {
+        @apply bg-opacity-40 hover:bg-opacity-30 active:bg-opacity-20;
+        @apply active:shadow-md bg-opacity-60 hover:bg-opacity-50 active:bg-opacity-40 disabled:bg-opacity-10;
+    }
+
+    .group-round > * {
+        @apply first:rounded-t-[inherit] last:rounded-b-[inherit];
+    }
+
+    .overlay {
+        @apply bg-gray-400/30;
+    }
+}

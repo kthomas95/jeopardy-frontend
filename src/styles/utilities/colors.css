@@ -1,0 +1,155 @@
+@layer utilities {
+    .text-1 {
+        @apply text-gray-400 dark:text-gray-400;
+    }
+
+    .text-2 {
+        @apply text-gray-500 dark:text-gray-300;
+    }
+
+    .text-3 {
+        @apply text-gray-600 dark:text-gray-200;
+    }
+
+    .text-4 {
+        @apply text-gray-700 dark:text-gray-100;
+    }
+
+    .bg-1 {
+        @apply bg-white dark:bg-gray-500;
+    }
+
+    .bg-2 {
+        @apply bg-gray-50 dark:bg-gray-600;
+    }
+
+    .bg-3 {
+        @apply bg-gray-100 dark:bg-gray-700;
+    }
+
+    .bg-4 {
+        @apply bg-gray-200 dark:bg-gray-800;
+    }
+
+    .bg-5 {
+        @apply bg-gray-300 dark:bg-gray-900;
+    }
+
+    .neutral-1 {
+        @apply bg-1 text-3;
+    }
+
+    .colors-light {
+        @apply bg-2 text-3;
+    }
+
+    .neutral-3 {
+        @apply bg-3 text-3;
+    }
+
+    .neutral-4 {
+        @apply bg-4 text-3;
+    }
+
+    .success-flat {
+        @apply bg-success-200 text-success-800;
+    }
+
+    .error-flat {
+        @apply bg-error-200 text-error-900;
+    }
+
+    /* GHOST STYLES */
+    .primary-ghost-1 {
+        @apply bg-sky-600/10 dark:bg-sky-600/20;
+    }
+
+    .primary-ghost-2 {
+        @apply bg-sky-600/20 dark:bg-sky-600/30;
+    }
+
+    .primary-ghost-3 {
+        @apply bg-sky-600/30 dark:bg-sky-600/40;
+    }
+
+    .secondary-ghost-1 {
+        @apply bg-secondary-600/10 dark:bg-secondary-600/20;
+    }
+
+    .secondary-ghost-2 {
+        @apply bg-secondary-600/20 dark:bg-secondary-600/20;
+    }
+
+    .secondary-ghost-3 {
+        @apply bg-secondary-600/30 dark:bg-secondary-600/20;
+    }
+
+    .success-ghost-1 {
+        @apply bg-emerald-500/10 dark:bg-emerald-600/20;
+    }
+
+    .success-ghost-2 {
+        @apply bg-emerald-500/20 dark:bg-emerald-600/30;
+    }
+
+    .success-ghost-3 {
+        @apply bg-emerald-600/30 dark:bg-emerald-600/40;
+    }
+
+    .neutral-ghost {
+    }
+
+    .error-ghost-1 {
+        @apply bg-red-600/10 dark:bg-red-400/10;
+    }
+
+    .error-ghost-2 {
+        @apply bg-red-600/20 dark:bg-red-500/20;
+    }
+
+    .error-ghost-3 {
+        @apply bg-red-600/30 dark:bg-red-600/30;
+    }
+
+    .neutral-ghost {
+        @apply bg-gray-400/20;
+    }
+
+    /** TEXT COLOR STYLES */
+    .success-text {
+        @apply text-emerald-600 dark:text-emerald-400;
+    }
+
+    .error-text {
+        @apply text-red-600 dark:text-red-500;
+    }
+
+    .primary-text {
+        @apply text-sky-500 dark:text-sky-400;
+    }
+
+    .text-color-light {
+        @apply text-gray-500 dark:text-gray-400;
+    }
+
+    /** BORDER COLOR STYLES */
+    .success-border {
+        @apply !border-emerald-500/50;
+    }
+
+    .primary-solid {
+        @apply bg-primary-500 text-primary-900;
+    }
+
+    .secondary-solid {
+        @apply bg-secondary-400 text-secondary-800;
+    }
+
+    .error-solid {
+        @apply bg-error-400 text-error-900;
+    }
+
+    .success-solid {
+        @apply bg-success-400 text-success-900;
+    }
+}

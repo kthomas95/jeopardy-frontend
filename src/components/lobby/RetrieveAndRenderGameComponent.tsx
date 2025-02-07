@@ -1,0 +1,32 @@
+import { useAtomValue } from "jotai";
+import { UserAtom } from "../../atoms/user-atom";
+import { useGetGameDateFromServer } from "../../api/useGetGameDateFromServer";
+import { ManagePendingGame } from "./ManagePendingGame";
+import { DisplayGame } from "../board/DisplayGame";
+import { displayColors } from "../../styles/colors";
+import { compose } from "cva";
+import { flattenStrings } from "../../utils/string/flatten-strings";
+import { SetUsername } from "../account/SetUsername";
+
+const cannotConnectToServer = (
+    <div
+        className={flattenStrings([
+            "inset-0 absolute m-auto p-3 rounded-md shadow-2xl w-64 h-24 flex center text-lg font-semibold",
+            displayColors({ color: "primary" }),
+        ])}
+    >
+        Loading From Server...
+    </div>
+);
+
+export const RetrieveAndRenderGameComponent = () => {
+    const name = useAtomValue(UserAtom) ?? "";
+    const serverResponse = useGetGameDateFromServer(name);
+
+    if (name === "") return <SetUsername />;
+
+    return serverResponse.activeGame
+        .map((x) => <DisplayGame {...x} />)
+        .alt(serverResponse.pendingGame.map((x) => <ManagePendingGame pendingGame={x} />))
+        .orDefault(cannotConnectToServer);
+};

@@ -1,0 +1,5 @@
+subscription GetActiveGame($playerName: String!) {
+    getPlayingGame(playerName: $playerName) {
+        stateString
+    }
+}

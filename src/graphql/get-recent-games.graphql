@@ -1,0 +1,9 @@
+subscription GetRecentGames {
+    getRecentGames {
+        players {
+            money
+            name
+        }
+        date
+    }
+}

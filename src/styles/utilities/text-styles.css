@@ -1,0 +1,21 @@
+@layer utilities {
+    .page-heading {
+        @apply text-lg font-semibold tracking-tight;
+    }
+
+    .caption-xs {
+        @apply text-xs italic font-light;
+    }
+
+    .btn-text {
+        @apply text-xs font-semibold whitespace-nowrap;
+    }
+
+    .label {
+        @apply font-medium tracking-tight uppercase;
+    }
+
+    .text-heading-base {
+        @apply text-base font-semibold;
+    }
+}

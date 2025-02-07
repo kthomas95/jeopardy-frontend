@@ -1,0 +1,7 @@
+subscription GetHighscores {
+    getHighscores {
+        playerName
+        amount
+    }
+
+}
