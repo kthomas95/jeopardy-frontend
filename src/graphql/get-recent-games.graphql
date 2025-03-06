@@ -4,6 +4,6 @@ subscription GetRecentGames {
             money
             name
         }
-        date
+        epochTime
     }
 }

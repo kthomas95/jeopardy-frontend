@@ -1,6 +1,7 @@
 import { ActiveClue } from "../../api/round";
 import { flattenStrings } from "../../utils/string/flatten-strings";
 import { Maybe } from "purify-ts";
+import { FaHeart } from "react-icons/fa";
 
 const Clue = ({ clue }: { clue: Maybe<ActiveClue> }) =>
     clue
@@ -10,22 +11,26 @@ const Clue = ({ clue }: { clue: Maybe<ActiveClue> }) =>
                 disabled={canSelect.isNothing() ?? true}
                 className={flattenStrings([
                     moneyAmount ? "" : "opacity-0",
-                    aboutToBeShown ? "bg-slate-200 text-blue-700" : "bg-blue-700/80",
-                    "text-blue-100 font-bold text-xl shadow-md rounded-md fl.ex center",
+                    aboutToBeShown ? "bg-slate-200 text-jeopardy" : "bg-jeopardy/80",
+                    "text-blue-100 font-black text-xl shadow-md rounded-md flex center",
                 ])}
             >
                 {moneyAmount}
             </button>
         ))
-        .orDefault(<div />);
+        .orDefault(
+            <div className={"flex center text-4xl text-jeopardy/70 bg-jeopardy/20 rounded-md shadow-md"}>
+                <FaHeart />
+            </div>,
+        );
 
 export const DisplayClues = ({ clues }: { clues: Maybe<ActiveClue>[][] }) =>
     clues.map((clueRow, rowIndex) => (
-        <div className={"contents"}>
+        <>
             {clueRow.map((clue, columnIndex) => {
                 return (
                     <Clue key={clue.map((x) => x.hint).orDefault(`${rowIndex}${columnIndex}`)} clue={clue} />
                 );
             })}
-        </div>
+        </>
     ));

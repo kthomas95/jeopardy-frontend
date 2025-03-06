@@ -29,6 +29,7 @@ export interface CanBuzz {
 export interface AskForConfirmation {
     type: "AskForConfirmation";
     actualAnswer: string;
+    canGoNeutral: boolean;
 }
 
 export interface AskingForDailyDoubleWager {

@@ -1,0 +1,3 @@
+mutation ToggleCategory($date: String!, $title: String!) {
+    toggleCategory(date: $date, title: $title)
+}

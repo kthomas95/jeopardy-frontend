@@ -1,0 +1,3 @@
+mutation ValentinesMove($moveString: String!) {
+    makeValentinesMove(moveString: $moveString)
+}

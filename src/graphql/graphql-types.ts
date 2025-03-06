@@ -14,11 +14,6 @@ export interface Scalars {
   Float: { input: number; output: number; }
 }
 
-export interface GameNotStarted {
-  __typename?: 'GameNotStarted';
-  players: Array<Profile>;
-}
-
 export interface HighscoreResult {
   __typename?: 'HighscoreResult';
   amount: Scalars['Int']['output'];
@@ -27,10 +22,14 @@ export interface HighscoreResult {
 
 export interface Mutation {
   __typename?: 'Mutation';
-  createGame: GameNotStarted;
-  joinGame: GameNotStarted;
+  createGame: Scalars['Boolean']['output'];
+  finalizePlayers: Scalars['Boolean']['output'];
+  joinGame: Scalars['Boolean']['output'];
   makeMove: Scalars['Boolean']['output'];
+  makeValentinesMove: Scalars['Boolean']['output'];
   resetGame: Scalars['Boolean']['output'];
+  setYearRange: Scalars['Boolean']['output'];
+  toggleCategory: Scalars['Boolean']['output'];
 }
 
 
@@ -42,6 +41,36 @@ export interface MutationJoinGameArgs {
 export interface MutationMakeMoveArgs {
   gameMoveString: Scalars['String']['input'];
   playerName: Scalars['String']['input'];
+}
+
+
+export interface MutationMakeValentinesMoveArgs {
+  moveString: Scalars['String']['input'];
+}
+
+
+export interface MutationSetYearRangeArgs {
+  yearRange: Array<Scalars['Int']['input']>;
+}
+
+
+export interface MutationToggleCategoryArgs {
+  date: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+}
+
+export interface PendingCategoryPlayer {
+  __typename?: 'PendingCategoryPlayer';
+  date: Scalars['String']['output'];
+  isSelected: Scalars['Boolean']['output'];
+  title: Scalars['String']['output'];
+}
+
+export interface PendingGamePlayer {
+  __typename?: 'PendingGamePlayer';
+  pendingCategories?: Maybe<Array<PendingCategoryPlayer>>;
+  players: Array<Profile>;
+  yearRange: Array<Scalars['Int']['output']>;
 }
 
 export interface Player {
@@ -68,20 +97,26 @@ export interface Query {
 
 export interface RecentGame {
   __typename?: 'RecentGame';
-  date: Scalars['String']['output'];
+  epochTime: Scalars['Int']['output'];
   players: Array<Player>;
 }
 
 export interface Subscription {
   __typename?: 'Subscription';
   getHighscores: Array<HighscoreResult>;
-  getPendingGame?: Maybe<GameNotStarted>;
+  getPendingGame?: Maybe<PendingGamePlayer>;
   getPlayingGame?: Maybe<PlayingGame>;
   getPresentationView?: Maybe<Scalars['String']['output']>;
   getRecentGames: Array<RecentGame>;
+  getValentinesDayGame: PlayingGame;
 }
 
 
 export interface SubscriptionGetPlayingGameArgs {
+  playerName: Scalars['String']['input'];
+}
+
+
+export interface SubscriptionGetValentinesDayGameArgs {
   playerName: Scalars['String']['input'];
 }

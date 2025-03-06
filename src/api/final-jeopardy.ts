@@ -66,6 +66,7 @@ export const getActiveFinalJeopardy =
                     makeMove({
                         type: "VerifyAnswer",
                         isCorrect,
+                        isNeutral: false,
                     }),
             }),
             AskingForAnswer: (x): ActiveAskingForFinalAnswer => ({

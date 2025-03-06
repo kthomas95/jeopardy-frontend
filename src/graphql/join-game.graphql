@@ -1,7 +1,3 @@
 mutation JoinGame($playerName: String!) {
-    joinGame(playerName: $playerName) {
-        players {
-            playerName
-        }
-    }
+    joinGame(playerName: $playerName)
 }

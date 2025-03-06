@@ -8,8 +8,16 @@ import { ActiveFinalJeopardyStatus, FinalJeopardyStatus, getActiveFinalJeopardy 
 import { PlayerStatus } from "./player-status";
 import { make } from "wonka";
 
+export interface PlayerViewPlayer {
+    name: string;
+    moneyAmount: number;
+    isBuzzing: boolean;
+    hasNoIdea: boolean;
+    wasWrong: boolean;
+}
+
 export interface PlayerView {
-    players: Player[];
+    players: PlayerViewPlayer[];
     status: PlayerStatus;
     log: GameLogItem[];
 }
@@ -18,7 +26,7 @@ export const loadPlayerViewFromStateString = (game: PlayingGame): PlayerView =>
     JSON.parse(game.stateString) as PlayerView;
 
 export interface ActivePlayerView {
-    players: Player[];
+    players: PlayerViewPlayer[];
     round: Maybe<ActiveRound>;
     finalJeopardy: Maybe<ActiveFinalJeopardyStatus>;
     log: GameLogItem[];

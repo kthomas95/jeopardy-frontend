@@ -1,7 +1,9 @@
 import { useCreateGameMutation } from "../../__generated__/create-game.generated";
 import { buttonStyles } from "../../styles/button";
 
-export const CreateGameButton = () => {
+export interface CreateGameButtonProps {}
+
+export const CreateGameButton = ({}: CreateGameButtonProps) => {
     const [createGameResponse, createGame] = useCreateGameMutation();
 
     return (

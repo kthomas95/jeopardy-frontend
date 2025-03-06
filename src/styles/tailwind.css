@@ -1,7 +1,14 @@
-@import "utilities/index.css";
-@import "components/index.css";
-@import "app.css";
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind utilities;
-@tailwind components;
+@layer utilities {
+    .center {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@theme {
+    --color-jeopardy: #a50036;
+    --color-jeopardy-light: #b7204d;
+    --color-jeopardy-dark: darkred;
+}

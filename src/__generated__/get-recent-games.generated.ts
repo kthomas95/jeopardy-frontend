@@ -11,7 +11,7 @@ export const GetRecentGamesDocument = gql`
       money
       name
     }
-    date
+    epochTime
   }
 }
     `;
@@ -22,4 +22,4 @@ export function useGetRecentGamesSubscription<TData = GetRecentGamesSubscription
 export type GetRecentGamesSubscriptionVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type GetRecentGamesSubscription = { getRecentGames: Array<{ date: string, players: Array<{ money: number, name: string }> }> };
+export type GetRecentGamesSubscription = { getRecentGames: Array<{ epochTime: number, players: Array<{ money: number, name: string }> }> };

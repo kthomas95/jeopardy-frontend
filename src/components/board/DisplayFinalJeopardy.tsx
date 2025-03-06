@@ -16,8 +16,8 @@ const AskingForAnswerComponent = ({ category, clue, submitAnswer }: ActiveAsking
     const [answer, setAnswer] = useState("");
 
     return (
-        <div className={"shadow-2xl flex flex-col gap-2 rounded-lg bg-sky-700/20 p-4"}>
-            <div>{category}</div>
+        <div className={"shadow-2xl flex flex-col gap-2 rounded-lg bg-jeopardy-light text-white p-4"}>
+            <div className={"font-bold"}>{category}</div>
             {clue}
 
             <div className={"flex flex-col gap-2"}>
@@ -41,7 +41,7 @@ const AskingForConfirmationComponent = ({
     providedAnswer,
     submitConfirmation,
 }: ActiveAskingForFinalConfirmation) => (
-    <div>
+    <div className={"bg-jeopardy-light p-4 text-white rounded-md shadow-md"}>
         <div>Your Answer: {providedAnswer}</div>
         <div>Actual Answer: {actualAnswer}</div>
         <div className="grid grid-cols-2 gap-3">
@@ -59,7 +59,7 @@ const AskingForWagerComponent = ({ category, submitWager }: ActiveAskingForFinal
     const [amount, setAmount] = useState("");
 
     return (
-        <div className={"shadow-2xl flex flex-col gap-2 rounded-lg bg-sky-700/20 p-4"}>
+        <div className={"shadow-2xl flex flex-col gap-2 rounded-lg bg-jeopardy-light text-white p-4"}>
             <div>
                 The category is <b>{category}</b>
             </div>

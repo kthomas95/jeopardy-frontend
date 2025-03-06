@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col text-slate-200 bg-slate-800 min-h-dvh">
             <RetrieveAndRenderGameComponent />
         </div>
     );

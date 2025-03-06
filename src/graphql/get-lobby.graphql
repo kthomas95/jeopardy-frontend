@@ -3,5 +3,11 @@ subscription GetPendingGame {
         players {
             playerName
         }
+        yearRange
+        pendingCategories {
+            isSelected
+            date
+            title
+        }
     }
 }

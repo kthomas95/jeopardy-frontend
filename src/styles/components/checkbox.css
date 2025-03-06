@@ -1,5 +1,0 @@
-@layer components {
-    .check-box {
-        @apply h-5 w-5 rounded-md border mr-3 flex center shrink-0;
-    }
-}

@@ -5,6 +5,8 @@ import { DisplayCategories } from "./DisplayCategories";
 import { DisplayPlayers } from "./DisplayPlayers";
 import { Clue } from "../../api/clue";
 import { Maybe } from "purify-ts";
+import { motion } from "framer-motion";
+import { flattenStrings } from "../../utils/string/flatten-strings";
 
 export interface PresentationViewProps {
     players: Player[];
@@ -34,30 +36,33 @@ const RenderPresentationRound = ({
     controlOfBoard,
     currentClue,
 }: RoundPresentationView) => (
-    <div className={"grid grid-cols-6 gap-3 p-3 grid-rows-6 h-full min-h-0"}>
+    <div className={"grid grid-cols-6 gap-3 p-6 grid-rows-6 h-full min-h-0"}>
         <DisplayCategories categories={categories} />
 
         {Maybe.fromNullable(currentClue)
+            .filter((x) => !x.aboutToBeShown)
             .map((clue) => (
-                <div
+                <motion.div
+                    layoutId={`${clue.moneyAmount}`}
                     className={
                         "bg-blue-700 fixed inset-16 m-auto shadow-2xl border-sky-900 border-2 rounded-md p-4 flex center font-bold uppercase text-2xl"
                     }
                 >
                     {clue?.hint}
-                </div>
+                </motion.div>
             ))
             .extract()}
 
         {board.map((row) =>
-            row.map((clue) => (
-                <div
-                    className={
-                        "bg-blue-700 disabled:opacity-50 text-blue-100 font-bold text-xl shadow-md rounded-md flex center"
-                    }
+            row.map((clue, categoryIndex) => (
+                <motion.div
+                    layoutId={`${categories[categoryIndex]?.title}${clue}`}
+                    className={flattenStrings([
+                        "bg-blue-700 disabled:opacity-50 text-blue-100 font-bold text-xl shadow-md rounded-md flex center",
+                    ])}
                 >
                     {clue}
-                </div>
+                </motion.div>
             )),
         )}
     </div>
@@ -81,6 +86,8 @@ export const PresentationView = ({ players, status }: PresentationViewProps) => 
             FinalJeopardyPresentationView: RenderFinalJeopardy,
             RoundPresentationView: RenderPresentationRound,
         })(status)}
-        <DisplayPlayers players={players} />
+        <div className="px-4 pb-6">
+            <DisplayPlayers players={players} />
+        </div>
     </div>
 );

@@ -1,0 +1,3 @@
+mutation SetYearRange($yearRange: [Int!]!) {
+    setYearRange(yearRange: $yearRange)
+}

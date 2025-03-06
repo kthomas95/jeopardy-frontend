@@ -1,6 +1,6 @@
 import { Either, Left, Maybe, Right } from "purify-ts";
 import { useGetGameSubscription } from "../__generated__/get-game.generated";
-import { GameNotStarted, PlayingGame } from "../graphql/graphql-types";
+import { PendingGamePlayer, PlayingGame } from "../graphql/graphql-types";
 import {
     ActivePlayerView,
     getActivePlayerView,
@@ -17,7 +17,7 @@ export type MakeMove = (move: GameMove) => void;
 
 export interface GameServerResponse {
     activeGame: Maybe<ActivePlayerView>;
-    pendingGame: Maybe<GameNotStarted>;
+    pendingGame: Maybe<PendingGamePlayer>;
 }
 
 export const useGetGameDateFromServer = (playerId: string): GameServerResponse => {

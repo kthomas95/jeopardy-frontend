@@ -1,9 +1,0 @@
-@layer utilities {
-    .rounded-ltr-md {
-        @apply rounded-md;
-    }
-
-    .rounded-ltr-md > * {
-        @apply first:rounded-l-md last:rounded-r-md;
-    }
-}

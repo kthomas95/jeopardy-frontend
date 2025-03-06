@@ -16,10 +16,10 @@ import { ResetGameButton } from "../lobby/ResetGameButton";
 const CorrectResponseComponent = ({ amount, answer, hint, playerName }: CorrectResponse) => (
     <div
         className={
-            "ring-2 ring-emerald-600 bg-emerald-300/10 rounded-md shadow-md p-0.5 lg:p-1 text-white flex flex-col w-full gap-2 justify-center line-clamp-2"
+            "h-full ring-2 ring-emerald-600 bg-emerald-600/0 rounded-md shadow-md p-0.5 lg:p-1 flex flex-col w-full gap-2 justify-center"
         }
     >
-        <div className={"font-semibold text-sm uppercase"}>{hint}</div>
+        <div className={"font-semibold text-sm uppercase line-clamp-2"}>{hint}</div>
         <div className={"font-light"}>
             {playerName} correctly guessed{" "}
             <span className={"font-bold uppercase text-emerald-700"}>{answer}</span>, earning ${amount}.
@@ -27,13 +27,25 @@ const CorrectResponseComponent = ({ amount, answer, hint, playerName }: CorrectR
     </div>
 );
 
-const IncorrectResponseComponent = ({ hint }: IncorrectResponse) => <div>Incorrrect Response</div>;
-
+const IncorrectResponseComponent = ({ hint, playerName, amount }: IncorrectResponse) => (
+    <div
+        className={
+            "h-full ring-2 ring-red-500/50 bg-red-300/10 rounded-md shadow-md p-0.5 lg:p-1 text-white flex flex-col w-full gap-2 justify-center"
+        }
+    >
+        <div className={"font-semibold text-sm uppercase line-clamp-2"}>{hint}</div>
+        <div className={"font-light"}>
+            <b className={"font-black"}>{playerName}</b> provided an incorrect response, losing ${amount}.
+        </div>
+    </div>
+);
 const StumpComponent = ({ answer, hint }: StumpAnswer) => {
     return (
-        <div className={"flex flex-col gap-2 text-slate-300"}>
-            <div className={"font-bold uppercase line-clamp-2"}>{hint}</div>
-            {answer}
+        <div
+            className={"ring-2 ring-jeopardy/50 rounded-md shadow-md p-0.5 lg:p-1 flex flex-col gap-2 center"}
+        >
+            <div className={"font-semibold text-sm uppercase line-clamp-2"}>{hint}</div>
+            <div className={"font-light uppercase text-sm"}>{answer}</div>
         </div>
     );
 };
@@ -49,7 +61,7 @@ const DisplayLastGameLogItem = ({ log }: { log: GameLogItem[] }) => {
                 IncorrectResponse: IncorrectResponseComponent,
                 CorrectResponse: CorrectResponseComponent,
                 Message: ({ message }: GameLogMessage) => (
-                    <div className={"text-white flex center gap-4"}>
+                    <div className={"text-white flex center gap-4 h-full"}>
                         {message}
                         {Maybe.of(resetGame)
                             .filter(() => message.includes("over"))
@@ -121,7 +133,10 @@ export const GameLog = ({ log }: { log: GameLogItem[] }) => {
                 <DisplayFullHistory log={reversedLog} close={() => setIsDisplayingFull(false)} />
             )}
 
-            <button className={"col-span-6 grid relative p-2"} onClick={() => setIsDisplayingFull(true)}>
+            <button
+                className={"col-span-6 grid relative p-2 h-full"}
+                onClick={() => setIsDisplayingFull(true)}
+            >
                 <DisplayLastGameLogItem log={log} />
             </button>
         </>

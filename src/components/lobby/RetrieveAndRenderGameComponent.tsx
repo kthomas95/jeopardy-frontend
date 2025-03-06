@@ -28,5 +28,5 @@ export const RetrieveAndRenderGameComponent = () => {
     return serverResponse.activeGame
         .map((x) => <DisplayGame {...x} />)
         .alt(serverResponse.pendingGame.map((x) => <ManagePendingGame pendingGame={x} />))
-        .orDefault(cannotConnectToServer);
+        .orDefault(<SetUsername />);
 };

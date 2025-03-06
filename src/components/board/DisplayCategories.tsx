@@ -6,11 +6,11 @@ export const DisplayCategories = ({ categories }: { categories: PlayerViewCatego
             <div
                 key={category.title}
                 className={
-                    "text-xs text-overflow-ellipsis min-w-0  lg:text-sm tracking-tight text-center rounded-md shadow-md flex center p-0.5 lg:p-1 bg-blue-700/80 text-blue-100 font-semibold flex-col"
+                    "text-[8pt] uppercase overflow-ellipsis whitespace-break-spaces overflow-hidden min-w-0  lg:text-sm tracking-tighter text-center rounded-md shadow-md flex center p-0.5 lg:p-1 bg-jeopardy/80 text-blue-100 font-semibold flex-col"
                 }
             >
                 {category.title}
-                <div className={"text-xs"}>{category.date}</div>
+                <div className={"text-[8pt]"}>{category.date}</div>
             </div>
         ))}
     </>

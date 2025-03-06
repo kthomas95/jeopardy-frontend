@@ -6,11 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export const CreateGameDocument = gql`
     mutation CreateGame {
-  createGame {
-    players {
-      playerName
-    }
-  }
+  createGame
 }
     `;
 
@@ -20,4 +16,4 @@ export function useCreateGameMutation() {
 export type CreateGameMutationVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type CreateGameMutation = { createGame: { players: Array<{ playerName: string }> } };
+export type CreateGameMutation = { createGame: boolean };

@@ -13,5 +13,9 @@ function RouteComponent() {
     return Maybe.fromNullable(presentationViewString)
         .map((x) => JSON.parse(x) as PresentationViewProps)
         .map((x) => <PresentationView {...x} />)
-        .orDefault(<div>Loading Game</div>);
+        .orDefault(
+            <div className={"bg-slate-800 flex center font-black text-xl h-dvh text-slate-300 uppercase"}>
+                Waiting On Game To Start
+            </div>,
+        );
 }

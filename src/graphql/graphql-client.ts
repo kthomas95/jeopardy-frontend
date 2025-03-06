@@ -5,6 +5,8 @@ const wsClient = createWSClient({
     url: "ws://10.0.0.183:8080/subscriptions",
 
     on: {},
+    retryAttempts: 50,
+    shouldRetry: () => true,
     connectionParams: {
         headers: {
             "Access-Control-Allow-Origin": "*",

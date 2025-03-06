@@ -30,10 +30,15 @@ export interface FinalJeopardyAnswer {
 export interface VerifyAnswer {
     type: "VerifyAnswer";
     isCorrect: boolean;
+    isNeutral: boolean;
 }
 
 export interface Stump {
     type: "Stump";
+}
+
+export interface NoIdea {
+    type: "NoIdea";
 }
 
 export type GameMove =
@@ -44,7 +49,8 @@ export type GameMove =
     | FinalJeopardyWager
     | FinalJeopardyAnswer
     | VerifyAnswer
-    | Stump;
+    | Stump
+    | NoIdea;
 
 export interface MoveFromFrontend {
     move: GameMove;

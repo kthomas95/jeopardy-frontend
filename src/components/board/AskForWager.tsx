@@ -3,8 +3,9 @@ import { SubmittingWagerActive } from "../../api/round";
 import { useEffect, useState } from "react";
 import { number } from "zod";
 import { buttonStyles } from "../../styles/button";
-import { textField } from "../../styles/components/text-field";
+import { textField } from "../../styles/text-field";
 import { Slider } from "radix-ui";
+import { slider } from "../../styles/slider";
 
 export const AskForWager = ({ category, submitWager, maxWager }: SubmittingWagerActive) => {
     const [wager, setWager] = useState("");
@@ -13,17 +14,17 @@ export const AskForWager = ({ category, submitWager, maxWager }: SubmittingWager
     return (
         <div
             className={
-                "fixed z-20 inset-8 m-auto w-64 h-min rounded-md shadow-md border-slate-950 border-2 bg-slate-800 text-slate-200 flex flex-col"
+                "fixed z-20 inset-8 m-auto w-64 h-min rounded-md shadow-md border-jeopardy-dark border-2 text-slate-200 flex flex-col"
             }
         >
             <h3
                 className={
-                    "text-center font-bold text-lg text-white bg-blue-700/60 rounded-t-[inherit] p-2 uppercase"
+                    "text-center font-bold text-lg text-white bg-jeopardy rounded-t-[inherit] p-2 uppercase"
                 }
             >
                 Daily Double <br /> {category}
             </h3>
-            <div className="p-3 flex flex-col gap-3">
+            <div className="p-3 flex flex-col gap-3 bg-jeopardy-light">
                 <div className={"text-sm uppercase font-bold"}>Enter Your Wager Below</div>
 
                 <p className={"text-xs italic"}>You can wager up to ${maxWager}.</p>
@@ -58,17 +59,17 @@ export const AskForWager = ({ category, submitWager, maxWager }: SubmittingWager
                         setWager(amount.toString());
                         setWagerNumber(amount);
                     }}
-                    className={"h-5 relative flex w-full touch-none select-none items-center"}
+                    className={slider.root()}
                 >
-                    <Slider.Track className={"relative h-[3px] grow rounded-full bg-black"}>
-                        <Slider.Range className={"absolute h-full rounded-full bg-slate-400"} />
+                    <Slider.Track className={slider.track()}>
+                        <Slider.Range className={slider.range()} />
                     </Slider.Track>
-                    <Slider.Thumb className={"block size-5 rounded-[10px] bg-slate-100 shadow-lg "} />
+                    <Slider.Thumb className={slider.thumb()} />
                 </Slider.Root>
             </div>
 
             <button
-                className={buttonStyles({ class: "rounded-t-none py-3" })}
+                className={buttonStyles({ class: "rounded-t-none py-3", colors: "dark" })}
                 onClick={() => {
                     submitWager(wagerNumber);
                 }}

@@ -1,7 +1,3 @@
 mutation CreateGame {
-    createGame {
-        players {
-            playerName
-        }
-    }
+    createGame
 }

@@ -1,20 +1,37 @@
 import { useAtomValue } from "jotai";
 import { UserAtom } from "../../atoms/user-atom";
-import { CreateGameButton } from "./CreateGameButton";
 import { JoinGameButton } from "./JoinGameButton";
 import { ResetGameButton } from "./ResetGameButton";
 import { SetUsername } from "../account/SetUsername";
-import { GameNotStarted } from "../../graphql/graphql-types";
+import { YearRangeSlider } from "./YearRangeSlider";
+import { buttonStyles } from "../../styles/button";
+import { useFinalizePlayersMutation } from "../../__generated__/finalize-players.generated";
+import { PendingGamePlayer } from "../../graphql/graphql-types";
+import { ManageCategories } from "./ManageCategories";
+import { Highscores } from "../highscores/Highscores";
+import React from "react";
 
-export const ManagePendingGame = ({ pendingGame }: { pendingGame: GameNotStarted }) => {
+export const FinalizePlayers = () => {
+    const [, finalizePlayersMutation] = useFinalizePlayersMutation();
+    return (
+        <button onClick={() => finalizePlayersMutation({})} className={buttonStyles()}>
+            Finalize Players
+        </button>
+    );
+};
+
+export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePlayer }) => {
     const name = useAtomValue(UserAtom) ?? "";
 
     const names = pendingGame.players.map((x) => x.playerName);
 
     const canJoin = !names.includes(name);
 
+    if (Array.isArray(pendingGame.pendingCategories))
+        return <ManageCategories categories={pendingGame.pendingCategories} />;
+
     return (
-        <div className="p-3 bg-slate-800 text-slate-200 h-dvh">
+        <div className="p-3 min-h-dvh">
             <SetUsername />
 
             <div className="p-5 bg-slate-700/50 rounded-md shadow-md my-10 mx-3">
@@ -24,12 +41,19 @@ export const ManagePendingGame = ({ pendingGame }: { pendingGame: GameNotStarted
                         <div className={"shadow-lg rounded-md px-1 py-0.5 bg-sky-600/30"}>{player}</div>
                     ))}
                 </div>
+                <YearRangeSlider yearRange={pendingGame.yearRange} />
 
                 <div className="flex gap-3 p-3">
-                    {canJoin ? <JoinGameButton /> : <CreateGameButton />}
+                    {canJoin ? <JoinGameButton /> : <FinalizePlayers />}
                     <hr className={"ml-auto"} />
                     <ResetGameButton />
                 </div>
+            </div>
+
+            <hr className={"my-4 mx-5 opacity-50"} />
+
+            <div className="p-5">
+                <Highscores />
             </div>
         </div>
     );

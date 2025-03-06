@@ -6,11 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export const JoinGameDocument = gql`
     mutation JoinGame($playerName: String!) {
-  joinGame(playerName: $playerName) {
-    players {
-      playerName
-    }
-  }
+  joinGame(playerName: $playerName)
 }
     `;
 
@@ -22,4 +18,4 @@ export type JoinGameMutationVariables = Types.Exact<{
 }>;
 
 
-export type JoinGameMutation = { joinGame: { players: Array<{ playerName: string }> } };
+export type JoinGameMutation = { joinGame: boolean };

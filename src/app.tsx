@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import "./tailwind.css";
+import "./styles/tailwind.css";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
 import { Provider } from "urql";

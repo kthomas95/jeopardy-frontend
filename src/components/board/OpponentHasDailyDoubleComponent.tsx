@@ -6,7 +6,7 @@ export const OpponentHasDailyDoubleComponent = ({
     wager,
     clue,
 }: OpponentHasDailyDouble) => (
-    <div className={"absolute inset-0 bg-blue-800 z-50 flex px-[5%] py-[25%] flex-col gap-4"}>
+    <div className={"absolute inset-0 bg-blue-800 z-50 flex p-4 justify-center flex-col gap-4"}>
         <h2 className={"font-black text-6xl lg:text-7xl text-center mb-5"}>Daily Double!</h2>
         <p>
             {playerWithDailyDouble} has found a daily double in the category <b>{category}</b>.

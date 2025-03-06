@@ -24,7 +24,7 @@ export interface ActiveClue extends Clue {
 }
 
 export interface CanBuzzActive {
-    stump: () => void;
+    noIdea: () => void;
     buzz: () => void;
     question: QuestionWithoutAnswer;
 }
@@ -33,6 +33,7 @@ export interface AskForConfirmationActive {
     actualAnswer: string;
     isCorrect: () => void;
     isIncorrect: () => void;
+    isNeutral: Maybe<() => void>;
 }
 
 export interface SayingAnswerActive {
@@ -84,16 +85,21 @@ export const getActiveRound = (round: Round, makeMove: MakeMove): ActiveRound =>
             .filter((x) => x.type === "CanBuzz")
             .map(({ question }) => ({
                 buzz: () => makeMove({ type: "Buzz" }),
-                stump: () => makeMove({ type: "Stump" }),
+                noIdea: () => makeMove({ type: "NoIdea" }),
                 question,
             })),
         askForConfirmation: status
             .filter((x) => x.type === "AskForConfirmation")
-            .map(({ actualAnswer }) => ({
-                actualAnswer,
-                isCorrect: () => makeMove({ type: "VerifyAnswer", isCorrect: true }),
-                isIncorrect: () => makeMove({ type: "VerifyAnswer", isCorrect: false }),
-            })),
+            .map(
+                ({ actualAnswer, canGoNeutral }): AskForConfirmationActive => ({
+                    actualAnswer,
+                    isCorrect: () => makeMove({ type: "VerifyAnswer", isCorrect: true, isNeutral: false }),
+                    isIncorrect: () => makeMove({ type: "VerifyAnswer", isCorrect: false, isNeutral: false }),
+                    isNeutral: Maybe.of(() =>
+                        makeMove({ type: "VerifyAnswer", isCorrect: false, isNeutral: true }),
+                    ).filter(() => canGoNeutral),
+                }),
+            ),
         sayingAnswer: status
             .filter((x) => x.type === "SayingAnswer")
             .map(({ question }) => ({
