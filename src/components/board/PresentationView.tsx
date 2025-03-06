@@ -86,8 +86,6 @@ export const PresentationView = ({ players, status }: PresentationViewProps) => 
             FinalJeopardyPresentationView: RenderFinalJeopardy,
             RoundPresentationView: RenderPresentationRound,
         })(status)}
-        <div className="px-4 pb-6">
-            <DisplayPlayers players={players} />
-        </div>
+        <div className="px-4 pb-6">{/*<DisplayPlayers players={players} />*/}</div>
     </div>
 );

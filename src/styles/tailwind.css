@@ -8,7 +8,7 @@
 }
 
 @theme {
-    --color-jeopardy: #a50036;
-    --color-jeopardy-light: #b7204d;
-    --color-jeopardy-dark: darkred;
+    --color-jeopardy: var(--color-blue-700);
+    --color-jeopardy-light: var(--color-blue-600);
+    --color-jeopardy-dark: var(--color-blue-800);
 }

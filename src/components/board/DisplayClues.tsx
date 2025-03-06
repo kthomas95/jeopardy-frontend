@@ -19,9 +19,9 @@ const Clue = ({ clue }: { clue: Maybe<ActiveClue> }) =>
             </button>
         ))
         .orDefault(
-            <div className={"flex center text-4xl text-jeopardy/70 bg-jeopardy/20 rounded-md shadow-md"}>
-                <FaHeart />
-            </div>,
+            <div
+                className={"flex center text-4xl text-jeopardy/70 bg-jeopardy/20 rounded-md shadow-md"}
+            ></div>,
         );
 
 export const DisplayClues = ({ clues }: { clues: Maybe<ActiveClue>[][] }) =>

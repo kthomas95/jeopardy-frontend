@@ -6,7 +6,7 @@ import { DisplayRound } from "./DisplayRound";
 
 export const DisplayGame = ({ players, log, round, finalJeopardy }: ActivePlayerView) => {
     return (
-        <div className={"bg-rose-300 text-rose-900 h-dvh w-dvw overflow-hidden flex flex-col"}>
+        <div className={"bg-slate-800 text-slate-100 h-dvh w-dvw overflow-hidden flex flex-col"}>
             {round
                 .map((x) => <DisplayRound round={x} />)
                 .alt(finalJeopardy.map((x) => <DisplayFinalJeopardy {...x} />))
