@@ -5,8 +5,9 @@ const wsClient = createWSClient({
     url: "wss://api.jeopardy.website/subscriptions",
 
     on: {},
-    retryAttempts: 50,
+    retryAttempts: Infinity,
     shouldRetry: () => true,
+    keepAlive: 100,
     connectionParams: {
         headers: {
             "Access-Control-Allow-Origin": "*",

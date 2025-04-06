@@ -6,7 +6,7 @@ import { DisplayGame } from "../board/DisplayGame";
 import { displayColors } from "../../styles/colors";
 import { compose } from "cva";
 import { flattenStrings } from "../../utils/string/flatten-strings";
-import { SetUsername } from "../account/SetUsername";
+import { SetUsername, SetUsernameForm } from "../account/SetUsername";
 
 const cannotConnectToServer = (
     <div
@@ -23,10 +23,15 @@ export const RetrieveAndRenderGameComponent = () => {
     const name = useAtomValue(UserAtom) ?? "";
     const serverResponse = useGetGameDateFromServer(name);
 
-    if (name === "") return <SetUsername />;
+    if (name === "")
+        return (
+            <div className="p-3">
+                <SetUsernameForm />
+            </div>
+        );
 
     return serverResponse.activeGame
         .map((x) => <DisplayGame {...x} />)
         .alt(serverResponse.pendingGame.map((x) => <ManagePendingGame pendingGame={x} />))
-        .orDefault(<SetUsername />);
+        .orDefault(<div>We're Having Trouble Connecting To The Server</div>);
 };

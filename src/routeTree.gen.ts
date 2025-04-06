@@ -13,6 +13,7 @@
 import { Route as rootRoute } from "./routes/__root"
 import { Route as ValentineImport } from "./routes/valentine"
 import { Route as PresentationImport } from "./routes/presentation"
+import { Route as HistoryImport } from "./routes/history"
 import { Route as HighscoresImport } from "./routes/highscores"
 import { Route as IndexImport } from "./routes/index"
 import { Route as GamesIndexImport } from "./routes/games/index"
@@ -28,6 +29,12 @@ const ValentineRoute = ValentineImport.update({
 const PresentationRoute = PresentationImport.update({
   id: "/presentation",
   path: "/presentation",
+  getParentRoute: () => rootRoute,
+} as any)
+
+const HistoryRoute = HistoryImport.update({
+  id: "/history",
+  path: "/history",
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,6 +74,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof HighscoresImport
       parentRoute: typeof rootRoute
     }
+    "/history": {
+      id: "/history"
+      path: "/history"
+      fullPath: "/history"
+      preLoaderRoute: typeof HistoryImport
+      parentRoute: typeof rootRoute
+    }
     "/presentation": {
       id: "/presentation"
       path: "/presentation"
@@ -96,6 +110,7 @@ declare module "@tanstack/react-router" {
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
+  "/history": typeof HistoryRoute
   "/presentation": typeof PresentationRoute
   "/valentine": typeof ValentineRoute
   "/games": typeof GamesIndexRoute
@@ -104,6 +119,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
+  "/history": typeof HistoryRoute
   "/presentation": typeof PresentationRoute
   "/valentine": typeof ValentineRoute
   "/games": typeof GamesIndexRoute
@@ -113,6 +129,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
+  "/history": typeof HistoryRoute
   "/presentation": typeof PresentationRoute
   "/valentine": typeof ValentineRoute
   "/games/": typeof GamesIndexRoute
@@ -120,13 +137,26 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "/" | "/highscores" | "/presentation" | "/valentine" | "/games"
+  fullPaths:
+    | "/"
+    | "/highscores"
+    | "/history"
+    | "/presentation"
+    | "/valentine"
+    | "/games"
   fileRoutesByTo: FileRoutesByTo
-  to: "/" | "/highscores" | "/presentation" | "/valentine" | "/games"
+  to:
+    | "/"
+    | "/highscores"
+    | "/history"
+    | "/presentation"
+    | "/valentine"
+    | "/games"
   id:
     | "__root__"
     | "/"
     | "/highscores"
+    | "/history"
     | "/presentation"
     | "/valentine"
     | "/games/"
@@ -136,6 +166,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HighscoresRoute: typeof HighscoresRoute
+  HistoryRoute: typeof HistoryRoute
   PresentationRoute: typeof PresentationRoute
   ValentineRoute: typeof ValentineRoute
   GamesIndexRoute: typeof GamesIndexRoute
@@ -144,6 +175,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HighscoresRoute: HighscoresRoute,
+  HistoryRoute: HistoryRoute,
   PresentationRoute: PresentationRoute,
   ValentineRoute: ValentineRoute,
   GamesIndexRoute: GamesIndexRoute,
@@ -161,6 +193,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/highscores",
+        "/history",
         "/presentation",
         "/valentine",
         "/games/"
@@ -171,6 +204,9 @@ export const routeTree = rootRoute
     },
     "/highscores": {
       "filePath": "highscores.tsx"
+    },
+    "/history": {
+      "filePath": "history.tsx"
     },
     "/presentation": {
       "filePath": "presentation.tsx"

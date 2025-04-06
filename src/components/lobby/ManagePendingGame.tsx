@@ -8,8 +8,10 @@ import { buttonStyles } from "../../styles/button";
 import { useFinalizePlayersMutation } from "../../__generated__/finalize-players.generated";
 import { PendingGamePlayer } from "../../graphql/graphql-types";
 import { ManageCategories } from "./ManageCategories";
-import { GameHistory, Highscores } from "../highscores/Highscores";
+import { Highscores } from "../highscores/Highscores";
 import React from "react";
+import { GameHistory } from "../highscores/GameHistory";
+import { Link } from "@tanstack/react-router";
 
 export const FinalizePlayers = () => {
     const [, finalizePlayersMutation] = useFinalizePlayersMutation();
@@ -52,9 +54,11 @@ export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePla
 
             <hr className={"my-4 mx-5 opacity-50"} />
 
-            <div className="p-5">
+            <div className="p-5 flex flex-col">
                 <Highscores />
-                <GameHistory />
+                <Link to={"/history"} className={"my-3 italic inline-flex text-sm px-2  ml-auto underline"}>
+                    Full Game History
+                </Link>
             </div>
         </div>
     );
