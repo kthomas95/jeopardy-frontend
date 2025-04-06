@@ -8,7 +8,7 @@ import { buttonStyles } from "../../styles/button";
 import { useFinalizePlayersMutation } from "../../__generated__/finalize-players.generated";
 import { PendingGamePlayer } from "../../graphql/graphql-types";
 import { ManageCategories } from "./ManageCategories";
-import { Highscores } from "../highscores/Highscores";
+import { GameHistory, Highscores } from "../highscores/Highscores";
 import React from "react";
 
 export const FinalizePlayers = () => {
@@ -54,6 +54,7 @@ export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePla
 
             <div className="p-5">
                 <Highscores />
+                <GameHistory />
             </div>
         </div>
     );
