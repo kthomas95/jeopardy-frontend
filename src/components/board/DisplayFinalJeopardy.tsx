@@ -1,36 +1,42 @@
 import { renderUnion, unwrapUnion } from "../../utils/unions";
 import { ReactNode, useState } from "react";
 import { buttonStyles } from "../../styles/button";
-import {
-    ActiveAskingForFinalAnswer,
-    ActiveAskingForFinalConfirmation,
-    ActiveAskingForFinalWager,
-    AskingForFinalAnswer,
-    AskingForFinalConfirmation,
-    AskingForFinalWager,
-    FinalJeopardyStatus,
-} from "../../api/final-jeopardy";
 import { number } from "zod";
+import { useActiveGame, useGameStatus } from "../../api/active-game-context";
+import { isTypename } from "./OpponentIsBuzzingComponent";
+import {
+    FinalJeopardyProps_AskingForAnswer_Fragment,
+    FinalJeopardyProps_AskingForConfirmation_Fragment,
+    FinalJeopardyProps_AskingForWager_Fragment,
+} from "../../__generated__/get-active-game.generated";
 
-const AskingForAnswerComponent = ({ category, clue, submitAnswer }: ActiveAskingForFinalAnswer) => {
+const AskingForAnswerComponent = ({ category, clue }: FinalJeopardyProps_AskingForAnswer_Fragment) => {
+    const { makeMove } = useActiveGame();
+
     const [answer, setAnswer] = useState("");
 
-    return (
-        <div className={"shadow-2xl flex flex-col gap-2 rounded-lg bg-jeopardy-light text-white p-4"}>
-            <div className={"font-bold"}>{category}</div>
-            {clue}
+    const submitAnswer = (answer: string) => {
+        makeMove({ type: "FinalJeopardyAnswer", answer });
+    };
 
+    return (
+        <div className={"flex grow bg-jeopardy-dark justify-center items-center text-white p-4"}>
             <div className={"flex flex-col gap-2"}>
-                <input
-                    type={"text"}
-                    className={"bg-slate-200 text-slate-800 pl-2 py-0.5 shadow-md rounded-md"}
-                    value={answer}
-                    placeholder={"Enter Your Answer Here"}
-                    onChange={(e) => setAnswer(e.target.value)}
-                />
-                <button className={buttonStyles()} onClick={() => submitAnswer(answer)}>
-                    Submit Answer
-                </button>
+                <div className={"font-bold"}>{category}</div>
+                {clue}
+
+                <div className={"flex flex-col gap-2"}>
+                    <input
+                        type={"text"}
+                        className={"bg-slate-200 text-slate-800 pl-2 py-0.5 shadow-md rounded-md"}
+                        value={answer}
+                        placeholder={"Enter Your Answer Here"}
+                        onChange={(e) => setAnswer(e.target.value)}
+                    />
+                    <button className={buttonStyles()} onClick={() => submitAnswer(answer)}>
+                        Submit Answer
+                    </button>
+                </div>
             </div>
         </div>
     );
@@ -39,27 +45,48 @@ const AskingForAnswerComponent = ({ category, clue, submitAnswer }: ActiveAsking
 const AskingForConfirmationComponent = ({
     actualAnswer,
     providedAnswer,
-    submitConfirmation,
-}: ActiveAskingForFinalConfirmation) => (
-    <div className={"bg-jeopardy-light p-4 text-white rounded-md shadow-md"}>
-        <div>Your Answer: {providedAnswer}</div>
-        <div>Actual Answer: {actualAnswer}</div>
-        <div className="grid grid-cols-2 gap-3">
-            <button className={buttonStyles({ colors: "success" })} onClick={() => submitConfirmation(true)}>
-                Correct
-            </button>
-            <button className={buttonStyles({ colors: "error" })} onClick={() => submitConfirmation(false)}>
-                Incorrect
-            </button>
-        </div>
-    </div>
-);
+}: FinalJeopardyProps_AskingForConfirmation_Fragment) => {
+    const { makeMove } = useActiveGame();
 
-const AskingForWagerComponent = ({ category, submitWager }: ActiveAskingForFinalWager) => {
-    const [amount, setAmount] = useState("");
+    const submitConfirmation = (value: boolean) =>
+        makeMove({ type: "VerifyAnswer", isCorrect: value, isNeutral: false });
 
     return (
-        <div className={"shadow-2xl flex flex-col gap-2 rounded-lg bg-jeopardy-light text-white p-4"}>
+        <div
+            className={
+                "bg-jeopardy-dark grow p-4 flex justify-center flex-col items-center text-white shadow-md"
+            }
+        >
+            <div>Your Answer: {providedAnswer}</div>
+            <div>Actual Answer: {actualAnswer}</div>
+            <div className="grid grid-cols-2 gap-3">
+                <button
+                    className={buttonStyles({ colors: "success" })}
+                    onClick={() => submitConfirmation(true)}
+                >
+                    Correct
+                </button>
+                <button
+                    className={buttonStyles({ colors: "error" })}
+                    onClick={() => submitConfirmation(false)}
+                >
+                    Incorrect
+                </button>
+            </div>
+        </div>
+    );
+};
+
+const AskingForWagerComponent = ({ category }: FinalJeopardyProps_AskingForWager_Fragment) => {
+    const { makeMove } = useActiveGame();
+    const [amount, setAmount] = useState("");
+
+    const submitWager = (amount: number) => makeMove({ type: "FinalJeopardyWager", amount });
+
+    return (
+        <div
+            className={"flex grow items-center justify-center flex-col gap-2 bg-jeopardy-dark text-white p-4"}
+        >
             <div>
                 The category is <b>{category}</b>
             </div>
@@ -95,13 +122,29 @@ const AskingForWagerComponent = ({ category, submitWager }: ActiveAskingForFinal
     );
 };
 
-export const DisplayFinalJeopardy = (status: FinalJeopardyStatus) => (
-    <div className={"h-full max-w-96 flex center mx-auto"}>
-        {renderUnion<FinalJeopardyStatus>({
-            AskingForAnswer: AskingForAnswerComponent,
-            AskingForConfirmation: AskingForConfirmationComponent,
-            AskingForWager: AskingForWagerComponent,
-            Waiting: () => null,
-        })(status)}
-    </div>
-);
+export const DisplayFinalJeopardy = () => {
+    const status = useGameStatus()
+        .filter((x) => x.__typename === "FinalJeopardy")
+        .map((x) => x.status)
+        .extract();
+
+    if (!status) return null;
+
+    if (status.__typename === "AskingForAnswer") {
+        return <AskingForAnswerComponent {...status} />;
+    }
+
+    if (status.__typename === "AskingForWager") {
+        return <AskingForWagerComponent {...status} />;
+    }
+
+    if (status.__typename === "AskingForConfirmation") {
+        return <AskingForConfirmationComponent {...status} />;
+    }
+
+    if (status.__typename === "FJWaiting") {
+        return <div className={"grow bg-jeopardy-dark"} />;
+    }
+
+    return <div />;
+};

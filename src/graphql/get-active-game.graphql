@@ -1,5 +1,181 @@
+fragment GameLog on GameLogItem {
+    __typename
+    ... on CorrectResponse {
+        answer
+        amount
+        hint
+        playerName
+    }
+
+    ... on IncorrectResponse {
+        playerName
+        hint
+        amount
+        actualAnswerIfDailyDouble
+    }
+
+    ... on Message {
+        message
+    }
+
+    ... on StumpAnswer {
+        hint
+        answer
+    }
+}
+
+fragment PlayerProps on PlayerViewPlayer {
+    hasNoIdea
+    isBuzzing
+    moneyAmount
+    name
+    wasWrong
+    fjStatus {
+        waitingOnYou
+    }
+}
+
+fragment QuestionWithoutAnswerProps on QuestionWithoutAnswer {
+    category
+    moneyAmount
+    hint
+    categoryDate
+}
+
+fragment AvailableCluesProps on PlayerViewClue {
+    category
+    hint
+    moneyAmount
+    aboutToBeShown
+}
+
+fragment RoundViewProps on PlayerRoundView {
+    categories {
+        date
+        title
+    }
+    availableClues {
+        ...AvailableCluesProps
+    }
+    status {
+        __typename
+        ... on AskForConfirmation {
+            actualAnswer
+            canGoNeutral
+        }
+
+        ... on AskingForDailyDoubleWager {
+            maxWager
+            category
+        }
+
+        ... on CanBuzz {
+            question {
+                ...QuestionWithoutAnswerProps
+            }
+        }
+
+        ... on OpponentHasDailyDouble {
+            category
+            clue
+            playerWithDailyDouble
+            wager
+        }
+
+        ... on OpponentIsBuzzing {
+            question {
+                ...QuestionWithoutAnswerProps
+            }
+            opponentIsLookingAtAnswer
+            playerBuzzing
+        }
+
+        ... on SayingAnswer {
+            question {
+                ...QuestionWithoutAnswerProps
+            }
+        }
+
+        ... on Waiting {
+            message
+        }
+    }
+}
+
+
+fragment FinalJeopardyProps on FinalJeopardyStatus {
+    __typename
+
+
+
+    ... on AskingForAnswer {
+        category
+        clue
+    }
+
+    ... on AskingForConfirmation {
+        actualAnswer
+        providedAnswer
+    }
+
+    ... on AskingForWager {
+        category
+        maxWager
+    }
+
+    ... on FJWaiting {
+        type
+    }
+}
+
+fragment StatusProps on PlayerViewGameStatus {
+    __typename
+
+    ... on Round {
+        status {
+            ...RoundViewProps
+        }
+    }
+
+    ... on FinalJeopardy {
+
+        status {
+            ...FinalJeopardyProps
+        }
+    }
+
+    ... on Over {
+        winner
+        fjSummaries {
+            providedAnswer
+            name
+            amountWagered
+            wasCorrect
+        }
+        fj {
+            hint
+            answer
+            category
+        }
+    }
+}
+
+fragment PlayerViewProps on PlayerView {
+    log {
+        ...GameLog
+    }
+
+    players {
+        ...PlayerProps
+    }
+
+    status {
+        ...StatusProps
+    }
+}
+
 subscription GetActiveGame($playerName: String!) {
     getPlayingGame(playerName: $playerName) {
-        stateString
+        ...PlayerViewProps
     }
 }

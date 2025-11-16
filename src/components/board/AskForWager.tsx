@@ -1,15 +1,30 @@
-import { AskingForDailyDoubleWager } from "../../api/player-round-status";
-import { SubmittingWagerActive } from "../../api/round";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { number } from "zod";
 import { buttonStyles } from "../../styles/button";
 import { textField } from "../../styles/text-field";
 import { Slider } from "radix-ui";
 import { slider } from "../../styles/slider";
+import { useActiveGame, useRound } from "../../api/active-game-context";
+import { isTypename } from "./OpponentIsBuzzingComponent";
 
-export const AskForWager = ({ category, submitWager, maxWager }: SubmittingWagerActive) => {
+export const AskForWager = () => {
     const [wager, setWager] = useState("");
     const [wagerNumber, setWagerNumber] = useState(0);
+
+    const status = useRound().status;
+    const { makeMove } = useActiveGame();
+
+    const askForWager = isTypename(status, "AskingForDailyDoubleWager");
+
+    if (!askForWager) return null;
+
+    const { category, maxWager } = askForWager;
+
+    const submitWager = (value: number) => {
+        makeMove({ type: "DailyDoubleWager", amount: value });
+        setWager("");
+        setWagerNumber(0);
+    };
 
     return (
         <div

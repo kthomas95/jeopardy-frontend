@@ -1,19 +1,20 @@
-import {
-    CorrectResponse,
-    GameLogItem,
-    GameLogMessage,
-    IncorrectResponse,
-    StumpAnswer,
-} from "../../api/game-log";
 import { List, Maybe } from "purify-ts";
-import { renderUnion, unwrapUnion } from "../../utils/unions";
+import { renderTypenameUnion, renderUnion, unwrapGQLUnion, unwrapUnion } from "../../utils/unions";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import { useToggle } from "react-use";
 import { useResetGameMutation } from "../../__generated__/reset-game.generated";
 import { buttonStyles } from "../../styles/button";
 import { ResetGameButton } from "../lobby/ResetGameButton";
+import { useActiveGame } from "../../api/active-game-context";
+import {
+    GameLog_CorrectResponse_Fragment,
+    GameLog_IncorrectResponse_Fragment,
+    GameLog_Message_Fragment,
+    GameLog_StumpAnswer_Fragment,
+    GameLogFragment,
+} from "../../__generated__/get-active-game.generated";
 
-const CorrectResponseComponent = ({ amount, answer, hint, playerName }: CorrectResponse) => (
+const CorrectResponseComponent = ({ amount, answer, hint, playerName }: GameLog_CorrectResponse_Fragment) => (
     <div
         className={
             "h-full ring-2 ring-emerald-600 bg-emerald-600/0 rounded-md shadow-md p-0.5 lg:p-1 flex flex-col w-full gap-2 justify-center"
@@ -27,19 +28,29 @@ const CorrectResponseComponent = ({ amount, answer, hint, playerName }: CorrectR
     </div>
 );
 
-const IncorrectResponseComponent = ({ hint, playerName, amount }: IncorrectResponse) => (
+const IncorrectResponseComponent = ({
+    hint,
+    playerName,
+    amount,
+    actualAnswerIfDailyDouble,
+}: GameLog_IncorrectResponse_Fragment) => (
     <div
         className={
-            "h-full ring-2 ring-red-500/50 bg-red-300/10 rounded-md shadow-md p-0.5 lg:p-1 text-white flex flex-col w-full gap-2 justify-center"
+            "h-full ring-2 ring-red-500/50 bg-red-300/10 rounded-md shadow-md p-0.5 lg:p-1 text-white flex flex-col w-full gap-1 justify-center"
         }
     >
         <div className={"font-semibold text-sm uppercase line-clamp-2"}>{hint}</div>
+        {actualAnswerIfDailyDouble && (
+            <div className={"bg-emerald-700 w-max mx-auto p-1 rounded-md shadow-md text-sm"}>
+                {actualAnswerIfDailyDouble}
+            </div>
+        )}
         <div className={"font-light"}>
             <b className={"font-black"}>{playerName}</b> provided an incorrect response, losing ${amount}.
         </div>
     </div>
 );
-const StumpComponent = ({ answer, hint }: StumpAnswer) => {
+const StumpComponent = ({ answer, hint }: GameLog_StumpAnswer_Fragment) => {
     return (
         <div
             className={"ring-2 ring-jeopardy/50 rounded-md shadow-md p-0.5 lg:p-1 flex flex-col gap-2 center"}
@@ -50,17 +61,17 @@ const StumpComponent = ({ answer, hint }: StumpAnswer) => {
     );
 };
 
-const DisplayLastGameLogItem = ({ log }: { log: GameLogItem[] }) => {
+const DisplayLastGameLogItem = ({ log }: { log: GameLogFragment[] }) => {
     const lastItem = List.last(log);
     const [, resetGame] = useResetGameMutation();
 
     return lastItem
         .map(
-            renderUnion({
+            renderTypenameUnion({
                 StumpAnswer: StumpComponent,
                 IncorrectResponse: IncorrectResponseComponent,
                 CorrectResponse: CorrectResponseComponent,
-                Message: ({ message }: GameLogMessage) => (
+                Message: ({ message }: GameLog_Message_Fragment) => (
                     <div className={"text-white flex center gap-4 h-full"}>
                         {message}
                         {Maybe.of(resetGame)
@@ -78,7 +89,7 @@ const DisplayLastGameLogItem = ({ log }: { log: GameLogItem[] }) => {
         .extract();
 };
 
-const DisplayFullHistory = ({ log, close }: { log: GameLogItem[]; close: () => void }) => (
+const DisplayFullHistory = ({ log, close }: { log: GameLogFragment[]; close: () => void }) => (
     <div
         className={
             "absolute inset-8 lg:inset-16 m-auto bg-slate-800 p-4 shadow-md rounded-md ring-slate-900 ring-4 z-10 overflow-y-auto flex flex-col gap-4 text-slate-300 text-left"
@@ -87,7 +98,7 @@ const DisplayFullHistory = ({ log, close }: { log: GameLogItem[]; close: () => v
     >
         {log.map((gameLogItem, index) => (
             <Fragment key={index}>
-                {unwrapUnion<GameLogItem, ReactNode>({
+                {unwrapGQLUnion<GameLogFragment, ReactNode>({
                     CorrectResponse: ({ hint, playerName, answer, amount }) => (
                         <div>
                             <div className={"font-semibold text-sm uppercase"}>{hint}</div>
@@ -98,9 +109,13 @@ const DisplayFullHistory = ({ log, close }: { log: GameLogItem[]; close: () => v
                             </div>
                         </div>
                     ),
-                    IncorrectResponse: ({ hint, playerName, amount }) => (
+                    IncorrectResponse: ({ hint, playerName, amount, actualAnswerIfDailyDouble }) => (
                         <div>
+                            {actualAnswerIfDailyDouble && <div className={"font-black"}>Daily Double</div>}
                             <div className={"font-semibold text-sm uppercase"}>{hint}</div>
+                            {actualAnswerIfDailyDouble && (
+                                <div className={"text-emerald-600"}>{actualAnswerIfDailyDouble}</div>
+                            )}
                             <div className={"text-sm text-red-500"}>
                                 {playerName} -${amount}
                             </div>
@@ -122,7 +137,8 @@ const DisplayFullHistory = ({ log, close }: { log: GameLogItem[]; close: () => v
     </div>
 );
 
-export const GameLog = ({ log }: { log: GameLogItem[] }) => {
+export const GameLog = () => {
+    const log = useActiveGame().log;
     const reversedLog = log.toReversed();
 
     const [isDisplayingFull, setIsDisplayingFull] = useToggle(false);

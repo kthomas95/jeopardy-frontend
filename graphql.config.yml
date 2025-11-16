@@ -1,2 +1,2 @@
-schema: http://10.0.0.183:8080/graphql
+schema: http://10.0.0.21:8080/graphql
 documents: '**/*.graphql'

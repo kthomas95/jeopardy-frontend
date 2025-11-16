@@ -1,22 +1,20 @@
 import { Either, Left, Maybe, Right } from "purify-ts";
 import { useGetGameSubscription } from "../__generated__/get-game.generated";
 import { PendingGamePlayer, PlayingGame } from "../graphql/graphql-types";
-import {
-    ActivePlayerView,
-    getActivePlayerView,
-    loadPlayerViewFromStateString,
-    PlayerView,
-} from "./player-view";
 import { useMakeMoveMutation } from "../__generated__/make-move.generated";
 import { GameMove } from "./game-move";
 import { useEffect, useMemo } from "react";
-import { useGetActiveGameSubscription } from "../__generated__/get-active-game.generated";
+import {
+    PlayerViewPropsFragment,
+    useGetActiveGameSubscription,
+} from "../__generated__/get-active-game.generated";
 import { useGetPendingGameSubscription } from "../__generated__/get-lobby.generated";
+import { GameContext } from "./active-game-context";
 
 export type MakeMove = (move: GameMove) => void;
 
 export interface GameServerResponse {
-    activeGame: Maybe<ActivePlayerView>;
+    activeGame: Maybe<GameContext>;
     pendingGame: Maybe<PendingGamePlayer>;
 }
 
@@ -37,10 +35,7 @@ export const useGetGameDateFromServer = (playerId: string): GameServerResponse =
 
     return {
         activeGame: useMemo(
-            () =>
-                Maybe.fromNullable(game?.getPlayingGame)
-                    .map(loadPlayerViewFromStateString)
-                    .map((view) => getActivePlayerView(view, makeMove)),
+            () => Maybe.fromNullable(game?.getPlayingGame).map((x) => ({ ...x, makeMove })),
             [game],
         ),
         pendingGame: useMemo(() => Maybe.fromNullable(pendingGame?.getPendingGame), [pendingGame]),

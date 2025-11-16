@@ -7,6 +7,7 @@ import { displayColors } from "../../styles/colors";
 import { compose } from "cva";
 import { flattenStrings } from "../../utils/string/flatten-strings";
 import { SetUsername, SetUsernameForm } from "../account/SetUsername";
+import { activeGameContext } from "../../api/active-game-context";
 
 const cannotConnectToServer = (
     <div
@@ -31,7 +32,11 @@ export const RetrieveAndRenderGameComponent = () => {
         );
 
     return serverResponse.activeGame
-        .map((x) => <DisplayGame {...x} />)
+        .map((x) => (
+            <activeGameContext.Provider value={x}>
+                <DisplayGame />
+            </activeGameContext.Provider>
+        ))
         .alt(serverResponse.pendingGame.map((x) => <ManagePendingGame pendingGame={x} />))
         .orDefault(<div>We're Having Trouble Connecting To The Server</div>);
 };

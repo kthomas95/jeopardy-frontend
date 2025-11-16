@@ -1,4 +1,4 @@
-import { PlayerViewCategory } from "../../api/category";
+import { PlayerViewCategory } from "../../graphql/graphql-types";
 
 export const DisplayCategories = ({ categories }: { categories: PlayerViewCategory[] }) => (
     <>
