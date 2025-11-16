@@ -1,6 +1,5 @@
-import { OpponentIsBuzzing } from "../../api/player-round-status";
 import { flattenStrings } from "../../utils/string/flatten-strings";
-import { useGameStatus, useRound } from "../../api/active-game-context";
+import { useRound } from "../../api/active-game-context";
 
 export const isTypename = <K extends T["__typename"], T extends { __typename: string }>(
     x: T,
