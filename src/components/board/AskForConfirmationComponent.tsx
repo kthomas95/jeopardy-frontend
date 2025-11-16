@@ -1,4 +1,3 @@
-import { AskForConfirmation } from "../../api/player-round-status";
 import { buttonStyles } from "../../styles/button";
 import { useActiveGame, useRound } from "../../api/active-game-context";
 import { isTypename } from "./OpponentIsBuzzingComponent";

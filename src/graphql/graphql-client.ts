@@ -2,8 +2,8 @@ import { createClient as createWSClient, SubscribePayload } from "graphql-ws";
 import { cacheExchange, createClient, fetchExchange, subscriptionExchange } from "urql";
 
 const wsClient = createWSClient({
-    // url: "wss://api.jeopardy.website/subscriptions",
-    url: "ws://10.0.0.21:8080/subscriptions",
+    url: "wss://api.jeopardy.website/subscriptions",
+    // url: "ws://10.0.0.21:8080/subscriptions",
 
     on: {},
     retryAttempts: Infinity,
@@ -18,8 +18,8 @@ const wsClient = createWSClient({
 });
 
 export const graphqlClient = createClient({
-    url: "http://10.0.0.21:8080/graphql",
-    // url: "https://api.jeopardy.website/graphql",
+    // url: "http://10.0.0.21:8080/graphql",
+    url: "https://api.jeopardy.website/graphql",
     fetchOptions: {
         headers: {
             "Access-Control-Allow-Origin": "*",

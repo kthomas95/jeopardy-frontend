@@ -1,6 +1,6 @@
 import { Either, Left, Maybe, Right } from "purify-ts";
 import { useGetGameSubscription } from "../__generated__/get-game.generated";
-import { PendingGamePlayer, PlayingGame } from "../graphql/graphql-types";
+import { PendingGamePlayer } from "../graphql/graphql-types";
 import { useMakeMoveMutation } from "../__generated__/make-move.generated";
 import { GameMove } from "./game-move";
 import { useEffect, useMemo } from "react";
