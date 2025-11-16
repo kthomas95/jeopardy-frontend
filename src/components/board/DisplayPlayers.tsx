@@ -4,7 +4,7 @@ import { useActiveGame } from "../../api/active-game-context";
 export const DisplayPlayers = () => {
     const players = useActiveGame().players;
     return (
-        <div className={"grid player grid-flow-col p-2 gap-2 md:h-16 items-end col-span-6 text-white"}>
+        <div className={"grid player grid-flow-row grid-cols-3 p-2 gap-2 md:h-16 items-end col-span-6 text-white"}>
             {players.map((player) => (
                 <div
                     className={flattenStrings([
