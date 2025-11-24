@@ -11,8 +11,8 @@ interface ClueSquareProps {
 const Clue = ({ clue, selectClue }: ClueSquareProps) => {
     return clue
         .map(({ aboutToBeShown, hint, moneyAmount, category }) => (
-            <motion.button
-                layoutId={`${category}${moneyAmount}`}
+            <button
+                // layoutId={`${category}${moneyAmount}`}
                 onClick={selectClue.extract()}
                 disabled={selectClue.isNothing() ?? true}
                 className={flattenStrings([
@@ -22,7 +22,7 @@ const Clue = ({ clue, selectClue }: ClueSquareProps) => {
                 ])}
             >
                 {moneyAmount}
-            </motion.button>
+            </button>
         ))
         .orDefault(
             <div

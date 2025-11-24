@@ -25,8 +25,8 @@ export const CanBuzzComponent = () => {
     const noIdea = () => makeMove({ type: "NoIdea" });
 
     return (
-        <motion.div
-            layoutId={`${question.category}${question.moneyAmount}`}
+        <div
+            // layoutId={`${question.category}${question.moneyAmount}`}
             className={"absolute z-20 inset-0 flex flex-col"}
         >
             <button
@@ -52,6 +52,6 @@ export const CanBuzzComponent = () => {
             >
                 No Idea
             </button>
-        </motion.div>
+        </div>
     );
 };
