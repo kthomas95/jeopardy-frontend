@@ -29,12 +29,12 @@ export const Highscores = () => {
                 {/*    </div>*/}
                 {/*)}*/}
             </div>
-            <div className="grid grid-cols-[max-content_max-content] col-gap-6 gap-x-7 gap-y-3 p-3 text-sm italic">
+            <div className="grid grid-cols-[max-content_max-content] col-gap-6 gap-x-7 gap-y-3 p-3">
                 {rest.map(({ amount, playerName }, index) => (
                     <React.Fragment key={playerName}>
                         {/*<div className={"font-black"}>{index + 1}.</div>*/}
                         <div className="font-bold text-slate-300 ">{playerName}</div>
-                        <div className={"tracking-tighter font-light"}>
+                        <div className={"tracking-tight"}>
                             {new Intl.NumberFormat("en-US", {
                                 style: "currency",
                                 currency: "USD",
