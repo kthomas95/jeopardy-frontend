@@ -22,6 +22,17 @@ fragment GameLog on GameLogItem {
         hint
         answer
     }
+
+    ... on ManualModeSummary {
+        answer
+        hint
+        amount
+        playerSummary {
+            answer
+            name
+            verification
+        }
+    }
 }
 
 fragment PlayerProps on PlayerViewPlayer {
@@ -33,6 +44,8 @@ fragment PlayerProps on PlayerViewPlayer {
     fjStatus {
         waitingOnYou
     }
+    greenRing
+    redRing
 }
 
 fragment QuestionWithoutAnswerProps on QuestionWithoutAnswer {
@@ -59,9 +72,20 @@ fragment RoundViewProps on PlayerRoundView {
     }
     status {
         __typename
+
+        ... on CanProvideManualAnswer {
+            question {
+               ...QuestionWithoutAnswerProps
+            }
+        }
+
         ... on AskForConfirmation {
             actualAnswer
             canGoNeutral
+            providedAnswer
+            question {
+                ...QuestionWithoutAnswerProps
+            }
         }
 
         ... on AskingForDailyDoubleWager {

@@ -16,6 +16,7 @@ export const GetPendingGameDocument = gql`
       date
       title
     }
+    gameStyle
   }
 }
     `;
@@ -26,4 +27,4 @@ export function useGetPendingGameSubscription<TData = GetPendingGameSubscription
 export type GetPendingGameSubscriptionVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type GetPendingGameSubscription = { getPendingGame?: { yearRange: Array<number>, players: Array<{ playerName: string }>, pendingCategories?: Array<{ isSelected: boolean, date: string, title: string }> | null } | null };
+export type GetPendingGameSubscription = { getPendingGame?: { yearRange: Array<number>, gameStyle: Types.GameStyle, players: Array<{ playerName: string }>, pendingCategories?: Array<{ isSelected: boolean, date: string, title: string }> | null } | null };

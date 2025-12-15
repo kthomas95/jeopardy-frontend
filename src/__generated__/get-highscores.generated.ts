@@ -9,6 +9,11 @@ export const GetHighscoresDocument = gql`
   getHighscores {
     playerName
     amount
+    record {
+      lost
+      tied
+      won
+    }
   }
 }
     `;
@@ -19,4 +24,4 @@ export function useGetHighscoresSubscription<TData = GetHighscoresSubscription>(
 export type GetHighscoresSubscriptionVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type GetHighscoresSubscription = { getHighscores: Array<{ playerName: string, amount: number }> };
+export type GetHighscoresSubscription = { getHighscores: Array<{ playerName: string, amount: number, record: { lost: number, tied: number, won: number } }> };

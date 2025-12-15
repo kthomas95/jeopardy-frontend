@@ -25,6 +25,16 @@ export const GameLogFragmentDoc = gql`
     hint
     answer
   }
+  ... on ManualModeSummary {
+    answer
+    hint
+    amount
+    playerSummary {
+      answer
+      name
+      verification
+    }
+  }
 }
     `;
 export const PlayerPropsFragmentDoc = gql`
@@ -37,6 +47,8 @@ export const PlayerPropsFragmentDoc = gql`
   fjStatus {
     waitingOnYou
   }
+  greenRing
+  redRing
 }
     `;
 export const AvailableCluesPropsFragmentDoc = gql`
@@ -66,9 +78,18 @@ export const RoundViewPropsFragmentDoc = gql`
   }
   status {
     __typename
+    ... on CanProvideManualAnswer {
+      question {
+        ...QuestionWithoutAnswerProps
+      }
+    }
     ... on AskForConfirmation {
       actualAnswer
       canGoNeutral
+      providedAnswer
+      question {
+        ...QuestionWithoutAnswerProps
+      }
     }
     ... on AskingForDailyDoubleWager {
       maxWager
@@ -184,19 +205,21 @@ export type GameLog_CorrectResponse_Fragment = { __typename: 'CorrectResponse', 
 
 export type GameLog_IncorrectResponse_Fragment = { __typename: 'IncorrectResponse', playerName: string, hint: string, amount: number, actualAnswerIfDailyDouble?: string | null };
 
+export type GameLog_ManualModeSummary_Fragment = { __typename: 'ManualModeSummary', answer: string, hint: string, amount: number, playerSummary: Array<{ answer?: string | null, name: string, verification?: boolean | null }> };
+
 export type GameLog_Message_Fragment = { __typename: 'Message', message: string };
 
 export type GameLog_StumpAnswer_Fragment = { __typename: 'StumpAnswer', hint: string, answer: string };
 
-export type GameLogFragment = GameLog_CorrectResponse_Fragment | GameLog_IncorrectResponse_Fragment | GameLog_Message_Fragment | GameLog_StumpAnswer_Fragment;
+export type GameLogFragment = GameLog_CorrectResponse_Fragment | GameLog_IncorrectResponse_Fragment | GameLog_ManualModeSummary_Fragment | GameLog_Message_Fragment | GameLog_StumpAnswer_Fragment;
 
-export type PlayerPropsFragment = { hasNoIdea: boolean, isBuzzing: boolean, moneyAmount: number, name: string, wasWrong: boolean, fjStatus?: { waitingOnYou: boolean } | null };
+export type PlayerPropsFragment = { hasNoIdea: boolean, isBuzzing: boolean, moneyAmount: number, name: string, wasWrong: boolean, greenRing: boolean, redRing: boolean, fjStatus?: { waitingOnYou: boolean } | null };
 
 export type QuestionWithoutAnswerPropsFragment = { category: string, moneyAmount: number, hint: string, categoryDate: string };
 
 export type AvailableCluesPropsFragment = { category: string, hint?: string | null, moneyAmount: number, aboutToBeShown: boolean };
 
-export type RoundViewPropsFragment = { categories: Array<{ date: string, title: string }>, availableClues: Array<Array<AvailableCluesPropsFragment | null>>, status: { __typename: 'AskForConfirmation', actualAnswer: string, canGoNeutral: boolean } | { __typename: 'AskingForDailyDoubleWager', maxWager: number, category: string } | { __typename: 'CanBuzz', question: QuestionWithoutAnswerPropsFragment } | { __typename: 'OpponentHasDailyDouble', category: string, clue?: string | null, playerWithDailyDouble: string, wager?: number | null } | { __typename: 'OpponentIsBuzzing', opponentIsLookingAtAnswer: boolean, playerBuzzing: string, question: QuestionWithoutAnswerPropsFragment } | { __typename: 'SayingAnswer', question: QuestionWithoutAnswerPropsFragment } | { __typename: 'SelectingClue' } | { __typename: 'Waiting', message: string } };
+export type RoundViewPropsFragment = { categories: Array<{ date: string, title: string }>, availableClues: Array<Array<AvailableCluesPropsFragment | null>>, status: { __typename: 'AskForConfirmation', actualAnswer: string, canGoNeutral: boolean, providedAnswer?: string | null, question: QuestionWithoutAnswerPropsFragment } | { __typename: 'AskingForDailyDoubleWager', maxWager: number, category: string } | { __typename: 'CanBuzz', question: QuestionWithoutAnswerPropsFragment } | { __typename: 'CanProvideManualAnswer', question: QuestionWithoutAnswerPropsFragment } | { __typename: 'OpponentHasDailyDouble', category: string, clue?: string | null, playerWithDailyDouble: string, wager?: number | null } | { __typename: 'OpponentIsBuzzing', opponentIsLookingAtAnswer: boolean, playerBuzzing: string, question: QuestionWithoutAnswerPropsFragment } | { __typename: 'SayingAnswer', question: QuestionWithoutAnswerPropsFragment } | { __typename: 'SelectingClue' } | { __typename: 'Waiting', message: string } };
 
 export type FinalJeopardyProps_AskingForAnswer_Fragment = { __typename: 'AskingForAnswer', category: string, clue: string };
 
@@ -216,7 +239,7 @@ export type StatusProps_Round_Fragment = { __typename: 'Round', status: RoundVie
 
 export type StatusPropsFragment = StatusProps_FinalJeopardy_Fragment | StatusProps_Over_Fragment | StatusProps_Round_Fragment;
 
-export type PlayerViewPropsFragment = { log: Array<GameLog_CorrectResponse_Fragment | GameLog_IncorrectResponse_Fragment | GameLog_Message_Fragment | GameLog_StumpAnswer_Fragment>, players: Array<PlayerPropsFragment>, status?: StatusProps_FinalJeopardy_Fragment | StatusProps_Over_Fragment | StatusProps_Round_Fragment | null };
+export type PlayerViewPropsFragment = { log: Array<GameLog_CorrectResponse_Fragment | GameLog_IncorrectResponse_Fragment | GameLog_ManualModeSummary_Fragment | GameLog_Message_Fragment | GameLog_StumpAnswer_Fragment>, players: Array<PlayerPropsFragment>, status?: StatusProps_FinalJeopardy_Fragment | StatusProps_Over_Fragment | StatusProps_Round_Fragment | null };
 
 export type GetActiveGameSubscriptionVariables = Types.Exact<{
   playerName: Types.Scalars['String']['input'];

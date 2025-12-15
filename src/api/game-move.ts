@@ -41,6 +41,11 @@ export interface NoIdea {
     type: "NoIdea";
 }
 
+export interface ProvideAnswer {
+    type: "ProvideAnswer";
+    answer: string;
+}
+
 export type GameMove =
     | SelectClue
     | Buzz
@@ -50,7 +55,8 @@ export type GameMove =
     | FinalJeopardyAnswer
     | VerifyAnswer
     | Stump
-    | NoIdea;
+    | NoIdea
+    | ProvideAnswer;
 
 export interface MoveFromFrontend {
     move: GameMove;

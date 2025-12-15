@@ -61,7 +61,7 @@ export const DisplayGame = () => {
             <DisplayGameSummary />
 
             {/*<hr className={"mt-auto text-slate-200/40"} />*/}
-            <div className={"h-56 flex flex-col overflow-hidden"}>
+            <div className={"min-h-52 flex flex-col"}>
                 <DisplayPlayers />
                 <GameLog />
             </div>

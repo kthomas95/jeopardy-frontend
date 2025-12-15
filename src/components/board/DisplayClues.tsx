@@ -18,7 +18,7 @@ const Clue = ({ clue, selectClue }: ClueSquareProps) => {
                 className={flattenStrings([
                     moneyAmount ? "" : "opacity-0",
                     aboutToBeShown ? "bg-slate-200 text-jeopardy" : "bg-jeopardy/80",
-                    "text-blue-100 font-black text-xl shadow-md rounded-md flex center",
+                    "text-blue-100 !font-black text-xl shadow-md rounded-md flex center",
                 ])}
             >
                 {moneyAmount}

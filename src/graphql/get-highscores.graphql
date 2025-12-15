@@ -2,6 +2,11 @@ subscription GetHighscores {
     getHighscores {
         playerName
         amount
+        record {
+            lost
+            tied
+            won
+        }
     }
 
 }

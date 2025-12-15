@@ -11,12 +11,19 @@
 // Import Routes
 
 import { Route as rootRoute } from "./routes/__root"
+import { Route as NameImport } from "./routes/name"
 import { Route as HistoryImport } from "./routes/history"
 import { Route as HighscoresImport } from "./routes/highscores"
 import { Route as IndexImport } from "./routes/index"
 import { Route as GamesIndexImport } from "./routes/games/index"
 
 // Create/Update Routes
+
+const NameRoute = NameImport.update({
+  id: "/name",
+  path: "/name",
+  getParentRoute: () => rootRoute,
+} as any)
 
 const HistoryRoute = HistoryImport.update({
   id: "/history",
@@ -67,6 +74,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof HistoryImport
       parentRoute: typeof rootRoute
     }
+    "/name": {
+      id: "/name"
+      path: "/name"
+      fullPath: "/name"
+      preLoaderRoute: typeof NameImport
+      parentRoute: typeof rootRoute
+    }
     "/games/": {
       id: "/games/"
       path: "/games"
@@ -83,6 +97,7 @@ export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
   "/history": typeof HistoryRoute
+  "/name": typeof NameRoute
   "/games": typeof GamesIndexRoute
 }
 
@@ -90,6 +105,7 @@ export interface FileRoutesByTo {
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
   "/history": typeof HistoryRoute
+  "/name": typeof NameRoute
   "/games": typeof GamesIndexRoute
 }
 
@@ -98,15 +114,16 @@ export interface FileRoutesById {
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
   "/history": typeof HistoryRoute
+  "/name": typeof NameRoute
   "/games/": typeof GamesIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "/" | "/highscores" | "/history" | "/games"
+  fullPaths: "/" | "/highscores" | "/history" | "/name" | "/games"
   fileRoutesByTo: FileRoutesByTo
-  to: "/" | "/highscores" | "/history" | "/games"
-  id: "__root__" | "/" | "/highscores" | "/history" | "/games/"
+  to: "/" | "/highscores" | "/history" | "/name" | "/games"
+  id: "__root__" | "/" | "/highscores" | "/history" | "/name" | "/games/"
   fileRoutesById: FileRoutesById
 }
 
@@ -114,6 +131,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HighscoresRoute: typeof HighscoresRoute
   HistoryRoute: typeof HistoryRoute
+  NameRoute: typeof NameRoute
   GamesIndexRoute: typeof GamesIndexRoute
 }
 
@@ -121,6 +139,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HighscoresRoute: HighscoresRoute,
   HistoryRoute: HistoryRoute,
+  NameRoute: NameRoute,
   GamesIndexRoute: GamesIndexRoute,
 }
 
@@ -137,6 +156,7 @@ export const routeTree = rootRoute
         "/",
         "/highscores",
         "/history",
+        "/name",
         "/games/"
       ]
     },
@@ -148,6 +168,9 @@ export const routeTree = rootRoute
     },
     "/history": {
       "filePath": "history.tsx"
+    },
+    "/name": {
+      "filePath": "name.tsx"
     },
     "/games/": {
       "filePath": "games/index.tsx"

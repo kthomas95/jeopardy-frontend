@@ -18,6 +18,8 @@ export interface AskForConfirmation {
   __typename?: 'AskForConfirmation';
   actualAnswer: Scalars['String']['output'];
   canGoNeutral: Scalars['Boolean']['output'];
+  providedAnswer?: Maybe<Scalars['String']['output']>;
+  question: QuestionWithoutAnswer;
 }
 
 export interface AskingForAnswer {
@@ -46,6 +48,11 @@ export interface AskingForWager {
 
 export interface CanBuzz {
   __typename?: 'CanBuzz';
+  question: QuestionWithoutAnswer;
+}
+
+export interface CanProvideManualAnswer {
+  __typename?: 'CanProvideManualAnswer';
   question: QuestionWithoutAnswer;
 }
 
@@ -85,12 +92,20 @@ export interface FinalJeopardySummary {
   wasCorrect: Scalars['Boolean']['output'];
 }
 
-export type GameLogItem = CorrectResponse | IncorrectResponse | Message | StumpAnswer;
+export type GameLogItem = CorrectResponse | IncorrectResponse | ManualModeSummary | Message | StumpAnswer;
+
+export enum GameStyle {
+  Manual = 'Manual',
+  StandardFastest = 'StandardFastest',
+  StandardLowest = 'StandardLowest',
+  StandardRandom = 'StandardRandom'
+}
 
 export interface HighscoreResult {
   __typename?: 'HighscoreResult';
   amount: Scalars['Int']['output'];
   playerName: Scalars['String']['output'];
+  record: WinLossRecord;
 }
 
 export interface IncorrectResponse {
@@ -99,6 +114,21 @@ export interface IncorrectResponse {
   amount: Scalars['Int']['output'];
   hint: Scalars['String']['output'];
   playerName: Scalars['String']['output'];
+}
+
+export interface Item {
+  __typename?: 'Item';
+  answer?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  verification?: Maybe<Scalars['Boolean']['output']>;
+}
+
+export interface ManualModeSummary {
+  __typename?: 'ManualModeSummary';
+  amount: Scalars['Int']['output'];
+  answer: Scalars['String']['output'];
+  hint: Scalars['String']['output'];
+  playerSummary: Array<Item>;
 }
 
 export interface Message {
@@ -113,6 +143,7 @@ export interface Mutation {
   joinGame: Scalars['Boolean']['output'];
   makeMove: Scalars['Boolean']['output'];
   resetGame: Scalars['Boolean']['output'];
+  setGameStyle: Scalars['Boolean']['output'];
   setYearRange: Scalars['Boolean']['output'];
   toggleCategory: Scalars['Boolean']['output'];
 }
@@ -126,6 +157,11 @@ export interface MutationJoinGameArgs {
 export interface MutationMakeMoveArgs {
   gameMoveString: Scalars['String']['input'];
   playerName: Scalars['String']['input'];
+}
+
+
+export interface MutationSetGameStyleArgs {
+  gameStyle: GameStyle;
 }
 
 
@@ -173,8 +209,9 @@ export interface PendingFinalJeopardyPlayerStatus {
   waitingOnYou: Scalars['Boolean']['output'];
 }
 
-export interface PendingGamePlayer {
-  __typename?: 'PendingGamePlayer';
+export interface PendingGamePlayerView {
+  __typename?: 'PendingGamePlayerView';
+  gameStyle: GameStyle;
   pendingCategories?: Maybe<Array<PendingCategoryPlayer>>;
   players: Array<Profile>;
   yearRange: Array<Scalars['Int']['output']>;
@@ -219,14 +256,16 @@ export type PlayerViewGameStatus = FinalJeopardy | Over | Round;
 export interface PlayerViewPlayer {
   __typename?: 'PlayerViewPlayer';
   fjStatus?: Maybe<PendingFinalJeopardyPlayerStatus>;
+  greenRing: Scalars['Boolean']['output'];
   hasNoIdea: Scalars['Boolean']['output'];
   isBuzzing: Scalars['Boolean']['output'];
   moneyAmount: Scalars['Int']['output'];
   name: Scalars['String']['output'];
+  redRing: Scalars['Boolean']['output'];
   wasWrong: Scalars['Boolean']['output'];
 }
 
-export type PlayerViewRoundState = AskForConfirmation | AskingForDailyDoubleWager | CanBuzz | OpponentHasDailyDouble | OpponentIsBuzzing | SayingAnswer | SelectingClue | Waiting;
+export type PlayerViewRoundState = AskForConfirmation | AskingForDailyDoubleWager | CanBuzz | CanProvideManualAnswer | OpponentHasDailyDouble | OpponentIsBuzzing | SayingAnswer | SelectingClue | Waiting;
 
 /** Profile */
 export interface Profile {
@@ -277,7 +316,7 @@ export interface StumpAnswer {
 export interface Subscription {
   __typename?: 'Subscription';
   getHighscores: Array<HighscoreResult>;
-  getPendingGame?: Maybe<PendingGamePlayer>;
+  getPendingGame?: Maybe<PendingGamePlayerView>;
   getPlayingGame?: Maybe<PlayerView>;
   getRecentGames: Array<RecentGame>;
 }
@@ -290,4 +329,11 @@ export interface SubscriptionGetPlayingGameArgs {
 export interface Waiting {
   __typename?: 'Waiting';
   message: Scalars['String']['output'];
+}
+
+export interface WinLossRecord {
+  __typename?: 'WinLossRecord';
+  lost: Scalars['Int']['output'];
+  tied: Scalars['Int']['output'];
+  won: Scalars['Int']['output'];
 }

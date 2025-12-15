@@ -1,0 +1,3 @@
+mutation SetGameStyle($gameStyle: GameStyle!) {
+    setGameStyle(gameStyle: $gameStyle)
+}

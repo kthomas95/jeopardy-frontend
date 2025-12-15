@@ -9,10 +9,12 @@ import { useActiveGame } from "../../api/active-game-context";
 import {
     GameLog_CorrectResponse_Fragment,
     GameLog_IncorrectResponse_Fragment,
+    GameLog_ManualModeSummary_Fragment,
     GameLog_Message_Fragment,
     GameLog_StumpAnswer_Fragment,
     GameLogFragment,
 } from "../../__generated__/get-active-game.generated";
+import { Badge, Divider, Group, Menu, Stack, Text } from "@mantine/core";
 
 const CorrectResponseComponent = ({ amount, answer, hint, playerName }: GameLog_CorrectResponse_Fragment) => (
     <div
@@ -84,6 +86,43 @@ const DisplayLastGameLogItem = ({ log }: { log: GameLogFragment[] }) => {
                             .extract()}
                     </div>
                 ),
+                ManualModeSummary: ({
+                    hint,
+                    answer,
+                    playerSummary,
+                    amount,
+                }: GameLog_ManualModeSummary_Fragment) => (
+                    <Stack gap={"sm"}>
+                        <Text lh={"xs"} size={"sm"} fw={600}>
+                            {hint}
+                        </Text>
+                        <Group justify={"center"} gap={"xs"}>
+                            <Badge color="green" fw={900} variant={"light"}>
+                                ${amount}
+                            </Badge>
+                            <Badge fw={900} variant={"dot"} color={"green"}>
+                                {answer}
+                            </Badge>
+                        </Group>
+                        <Divider opacity={".5"} />
+                        <Group justify={"center"}>
+                            {playerSummary.map((x) => (
+                                <Badge
+                                    color={
+                                        typeof x?.verification === "boolean"
+                                            ? x?.verification
+                                                ? "green"
+                                                : "red"
+                                            : "gray"
+                                    }
+                                >
+                                    {x.name}
+                                    {x?.answer ? ` - ${x.answer}` : ""}
+                                </Badge>
+                            ))}
+                        </Group>
+                    </Stack>
+                ),
             }),
         )
         .extract();
@@ -129,6 +168,35 @@ const DisplayFullHistory = ({ log, close }: { log: GameLogFragment[]; close: () 
                     ),
                     Message: ({ message }) => (
                         <div className={"rounded-md shadow-md border p-2 border-slate-500"}>{message}</div>
+                    ),
+                    ManualModeSummary: ({ hint, answer, amount, playerSummary }) => (
+                        <Stack gap={"sm"}>
+                            <Text lh={"xs"} size={"sm"} fw={600}>
+                                {hint}
+                            </Text>
+                            <Badge fw={900} size={"sm"} variant={"dot"} color={"green"} ml={"auto"}>
+                                {answer}
+                            </Badge>
+                            <Group>
+                                <Text fw={900} size={"xs"}>
+                                    ${amount}
+                                </Text>
+                                {playerSummary.map((x) => (
+                                    <Badge
+                                        color={
+                                            typeof x?.verification === "boolean"
+                                                ? x?.verification
+                                                    ? "green"
+                                                    : "red"
+                                                : "gray"
+                                        }
+                                    >
+                                        {x.name}
+                                        {x?.answer ? ` - ${x.answer}` : ""}
+                                    </Badge>
+                                ))}
+                            </Group>
+                        </Stack>
                     ),
                 })(gameLogItem)}
             </Fragment>

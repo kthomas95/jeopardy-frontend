@@ -8,6 +8,7 @@ import { compose } from "cva";
 import { flattenStrings } from "../../utils/string/flatten-strings";
 import { SetUsername, SetUsernameForm } from "../account/SetUsername";
 import { activeGameContext } from "../../api/active-game-context";
+import { Center, Loader } from "@mantine/core";
 
 const cannotConnectToServer = (
     <div
@@ -29,6 +30,13 @@ export const RetrieveAndRenderGameComponent = () => {
             <div className="p-3">
                 <SetUsernameForm />
             </div>
+        );
+
+    if (serverResponse.isLoading)
+        return (
+            <Center h={"100dvh"}>
+                <Loader size={"xl"} />
+            </Center>
         );
 
     return serverResponse.activeGame

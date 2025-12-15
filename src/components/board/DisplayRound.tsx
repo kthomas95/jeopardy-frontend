@@ -9,6 +9,7 @@ import { AskForWager } from "./AskForWager";
 import { OpponentIsBuzzingComponent } from "./OpponentIsBuzzingComponent";
 import { useGameStatus } from "../../api/active-game-context";
 import { OpponentHasDailyDoubleComponent } from "./OpponentHasDailyDoubleComponent";
+import { CanProvideManualAnswer } from "./CanProvideManualAnswer";
 
 export const DisplayRound = () => {
     const round = useGameStatus()
@@ -54,6 +55,7 @@ export const DisplayRound = () => {
             <AskForConfirmationComponent />
             <AskForWager />
             <OpponentHasDailyDoubleComponent />
+            <CanProvideManualAnswer />
         </div>
     );
 };
