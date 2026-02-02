@@ -1,4 +1,4 @@
-import { GameLog } from "./GameLog";
+import { GameLog } from "./gamelog/GameLog";
 import { DisplayPlayers } from "./DisplayPlayers";
 import { DisplayFinalJeopardy } from "./DisplayFinalJeopardy";
 import { DisplayRound } from "./DisplayRound";

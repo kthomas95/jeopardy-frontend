@@ -40,13 +40,13 @@ export const CanBuzzComponent = () => {
                 </div>
             </Button>
             <TimerIndicator secondsToShow={10} />
-            <Button
-                onPress={noIdea}
-                className="py-6 uppercase font-black text-xl bg-red-700 text-white rounded-none"
-                fullWidth
+            <button
+                onClick={noIdea}
+                className="py-4 uppercase font-black text-xl bg-red-700 text-white rounded-none active:!scale-100"
+
             >
                 No Idea
-            </Button>
+            </button>
         </div>
     );
 };

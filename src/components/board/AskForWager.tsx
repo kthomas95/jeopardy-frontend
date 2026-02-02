@@ -35,7 +35,6 @@ export const AskForWager = () => {
                 <Modal.Container placement="center">
                     <Modal.Dialog>
                         <Modal.Header>
-                            {/* <Modal.Icon /> Optional: Icon */}
                             <Modal.Heading className="uppercase font-black tracking-loose text-center">
                                 Daily Double - {category}
                             </Modal.Heading>
@@ -64,7 +63,6 @@ export const AskForWager = () => {
                                         }
                                     }}
                                     value={wager}
-                                    className="text-black"
                                 />
 
                                 <Slider

@@ -12,13 +12,6 @@ export const RenderStringWithNewLines = ({ item, className }: { item: string; cl
     ));
 
 export const SayingAnswerComponent = () => {
-    const [isBuzzing, setIsBuzzing] = useToggle(false);
-
-    useLayoutEffect(() => {
-        setIsBuzzing(true);
-    }, []);
-
-    useVibrate(isBuzzing, [50, 50, 50, 50, 50, 50, 50, 50, 50], false);
 
     const status = useRound().status;
     const { makeMove } = useActiveGame();
@@ -45,10 +38,10 @@ export const SayingAnswerComponent = () => {
                 <p className={"p-1 uppercase"}>
                     <RenderStringWithNewLines item={question.hint} />
                 </p>
-                <Button onPress={showAnswer} variant="bordered" className="text-white border-white">
+                <Button onPress={showAnswer} variant="tertiary" size="lg" className="text-emerald-800 mx-auto my-4">
                     Click Here When You've Stated Your Answer
                 </Button>
-            </div>
+            </div >
         </>
     );
 };

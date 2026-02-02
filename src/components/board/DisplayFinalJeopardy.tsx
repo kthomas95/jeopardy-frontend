@@ -26,7 +26,6 @@ const AskingForAnswerComponent = ({ category, clue }: FinalJeopardyProps_AskingF
                 <div className={"flex flex-col gap-2"}>
                     <Input
                         type={"text"}
-                        className={"text-black"}
                         value={answer}
                         placeholder={"Enter Your Answer Here"}
                         onChange={(e) => setAnswer(e.target.value)}
@@ -96,7 +95,6 @@ const AskingForWagerComponent = ({ category }: FinalJeopardyProps_AskingForWager
                     onChange={(event) => {
                         setAmount(event.target.value);
                     }}
-                    className={"text-black"}
                 />
                 <Button
                     className="bg-sky-500 text-white"
