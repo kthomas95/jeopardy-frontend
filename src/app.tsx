@@ -8,15 +8,14 @@ import { graphqlClient } from "./graphql/graphql-client";
 import { Provider as JotaiProvider } from "jotai";
 
 const rootElement = document.getElementById("app")!;
+
 if (!rootElement.innerHTML) {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
-        // <StrictMode>
         <JotaiProvider>
             <Provider value={graphqlClient}>
                 <RouterProvider router={router} />
             </Provider>
         </JotaiProvider>,
-        // </StrictMode>,
     );
 }

@@ -10,10 +10,11 @@ export const GameLog = () => {
     return (
         <Modal>
             <Button
-                className="col-span-6 grid relative p-2 bg-transparent shadow-none border-none whitespace-normal h-auto min-h-0"
+                className="col-span-6 p-2 flex  h-full shadow-none border-none whitespace-normal h-full min-h-0"
                 fullWidth
+                variant=""
             >
-                <div className="w-full h-full">
+                <div className="w-full h-full grid">
                     <DisplayLastGameLogItem log={log} />
                 </div>
             </Button>
