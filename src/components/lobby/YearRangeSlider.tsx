@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSetYearRangeMutation } from "../../__generated__/set-year-range.generated";
-import { Slider } from "radix-ui";
-import { RangeSlider } from "@mantine/core";
+import { Slider } from "@heroui/react";
 
 export interface YearRangeSliderProps {
     yearRange: number[];
@@ -10,13 +9,11 @@ export interface YearRangeSliderProps {
 export const valuesOutOfSync = (a: number[], b: number[]) => a[0] !== b[0] || a[1] !== b[1];
 
 export const YearRangeSlider = ({ yearRange }: YearRangeSliderProps) => {
-    const [localRangeState, setLocalRangeState] = useState(yearRange);
+    const [localRangeState, setLocalRangeState] = useState<number | number[]>(yearRange);
     const [response, setYearRange] = useSetYearRangeMutation();
 
-    // const valuesOutOfSync = () => yearRange[0] !== localRangeState[0] || yearRange[1] !== localRangeState[1];
-
     function updateLocalValueWithRemoteValue() {
-        if (valuesOutOfSync(yearRange, localRangeState)) {
+        if (Array.isArray(localRangeState) && valuesOutOfSync(yearRange, localRangeState as number[])) {
             setLocalRangeState(yearRange);
         }
     }
@@ -24,19 +21,20 @@ export const YearRangeSlider = ({ yearRange }: YearRangeSliderProps) => {
     useEffect(updateLocalValueWithRemoteValue, [yearRange[0], yearRange[1]]);
 
     return (
-        <div className={"flex flex-col pt-5"}>
-            <RangeSlider
-                value={localRangeState as [number, number]}
-                min={1984}
-                max={2025}
-                minRange={0}
-                labelAlwaysOn
-                onChange={setLocalRangeState}
+        <div className={"flex flex-col pt-5 px-2"}>
+            <Slider
+                label="Year Range"
+                value={localRangeState}
+                minValue={1984}
+                maxValue={2025}
+                step={1}
+                onChange={(value) => setLocalRangeState(value)}
                 onChangeEnd={(value) => {
-                    setLocalRangeState(value);
+                    const val = value as number[];
+                    setLocalRangeState(val);
 
-                    if (valuesOutOfSync(value, yearRange)) {
-                        setYearRange({ yearRange: value });
+                    if (valuesOutOfSync(val, yearRange)) {
+                        setYearRange({ yearRange: val });
                     }
                 }}
             />

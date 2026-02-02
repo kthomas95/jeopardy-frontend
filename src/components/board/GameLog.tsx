@@ -3,7 +3,6 @@ import { renderTypenameUnion, renderUnion, unwrapGQLUnion, unwrapUnion } from ".
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import { useToggle } from "react-use";
 import { useResetGameMutation } from "../../__generated__/reset-game.generated";
-import { buttonStyles } from "../../styles/button";
 import { ResetGameButton } from "../lobby/ResetGameButton";
 import { useActiveGame } from "../../api/active-game-context";
 import {
@@ -14,7 +13,7 @@ import {
     GameLog_StumpAnswer_Fragment,
     GameLogFragment,
 } from "../../__generated__/get-active-game.generated";
-import { Badge, Divider, Group, Menu, Stack, Text } from "@mantine/core";
+import { Chip, Separator, Button } from "@heroui/react";
 
 const CorrectResponseComponent = ({ amount, answer, hint, playerName }: GameLog_CorrectResponse_Fragment) => (
     <div
@@ -79,9 +78,9 @@ const DisplayLastGameLogItem = ({ log }: { log: GameLogFragment[] }) => {
                         {Maybe.of(resetGame)
                             .filter(() => message.includes("over"))
                             .map((func) => (
-                                <button className={buttonStyles()} onClick={() => func({})}>
+                                <Button onPress={() => func({})}>
                                     Reset Game
-                                </button>
+                                </Button>
                             ))
                             .extract()}
                     </div>
@@ -92,36 +91,37 @@ const DisplayLastGameLogItem = ({ log }: { log: GameLogFragment[] }) => {
                     playerSummary,
                     amount,
                 }: GameLog_ManualModeSummary_Fragment) => (
-                    <Stack gap={"sm"}>
-                        <Text lh={"xs"} size={"sm"} fw={600}>
+                    <div className="flex flex-col gap-2">
+                        <p className="leading-tight text-sm font-semibold">
                             {hint}
-                        </Text>
-                        <Group justify={"center"} gap={"xs"}>
-                            <Badge color="green" fw={900} variant={"light"}>
+                        </p>
+                        <div className="flex justify-center gap-2">
+                            <Chip color="success" variant="soft">
                                 ${amount}
-                            </Badge>
-                            <Badge fw={900} variant={"dot"} color={"green"}>
+                            </Chip>
+                            <Chip color="success" variant="soft">
                                 {answer}
-                            </Badge>
-                        </Group>
-                        <Divider opacity={".5"} />
-                        <Group justify={"center"}>
+                            </Chip>
+                        </div>
+                        <Separator className="opacity-50" />
+                        <div className="flex justify-center flex-wrap gap-1">
                             {playerSummary.map((x) => (
-                                <Badge
+                                <Chip
+                                    key={x.name}
                                     color={
                                         typeof x?.verification === "boolean"
                                             ? x?.verification
-                                                ? "green"
-                                                : "red"
-                                            : "gray"
+                                                ? "success"
+                                                : "danger"
+                                            : "default"
                                     }
                                 >
                                     {x.name}
                                     {x?.answer ? ` - ${x.answer}` : ""}
-                                </Badge>
+                                </Chip>
                             ))}
-                        </Group>
-                    </Stack>
+                        </div>
+                    </div>
                 ),
             }),
         )
@@ -170,33 +170,34 @@ const DisplayFullHistory = ({ log, close }: { log: GameLogFragment[]; close: () 
                         <div className={"rounded-md shadow-md border p-2 border-slate-500"}>{message}</div>
                     ),
                     ManualModeSummary: ({ hint, answer, amount, playerSummary }) => (
-                        <Stack gap={"sm"}>
-                            <Text lh={"xs"} size={"sm"} fw={600}>
+                        <div className="flex flex-col gap-2">
+                            <p className="leading-tight text-sm font-semibold">
                                 {hint}
-                            </Text>
-                            <Badge fw={900} size={"sm"} variant={"dot"} color={"green"} ml={"auto"}>
+                            </p>
+                            <Chip size="sm" variant="soft" color="success" className="ml-auto">
                                 {answer}
-                            </Badge>
-                            <Group>
-                                <Text fw={900} size={"xs"}>
+                            </Chip>
+                            <div className="flex gap-2 items-center flex-wrap">
+                                <p className="font-black text-xs">
                                     ${amount}
-                                </Text>
+                                </p>
                                 {playerSummary.map((x) => (
-                                    <Badge
+                                    <Chip
+                                        key={x.name}
                                         color={
                                             typeof x?.verification === "boolean"
                                                 ? x?.verification
-                                                    ? "green"
-                                                    : "red"
-                                                : "gray"
+                                                    ? "success"
+                                                    : "danger"
+                                                : "default"
                                         }
                                     >
                                         {x.name}
                                         {x?.answer ? ` - ${x.answer}` : ""}
-                                    </Badge>
+                                    </Chip>
                                 ))}
-                            </Group>
-                        </Stack>
+                            </div>
+                        </div>
                     ),
                 })(gameLogItem)}
             </Fragment>
@@ -217,12 +218,14 @@ export const GameLog = () => {
                 <DisplayFullHistory log={reversedLog} close={() => setIsDisplayingFull(false)} />
             )}
 
-            <button
-                className={"col-span-6 grid relative p-2 h-full"}
-                onClick={() => setIsDisplayingFull(true)}
+            <Button
+                onPress={() => setIsDisplayingFull(true)}
+                className="col-span-6 grid relative p-2 h-full bg-transparent shadow-none border-none whitespace-normal h-auto min-h-0"
             >
-                <DisplayLastGameLogItem log={log} />
-            </button>
+                <div className="w-full h-full">
+                    <DisplayLastGameLogItem log={log} />
+                </div>
+            </Button>
         </>
     );
 };

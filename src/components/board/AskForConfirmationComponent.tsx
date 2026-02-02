@@ -1,7 +1,6 @@
-import { buttonStyles } from "../../styles/button";
 import { useActiveGame, useRound } from "../../api/active-game-context";
 import { isTypename } from "./OpponentIsBuzzingComponent";
-import { Badge, Box, Button, Center, Grid, Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
+import { Button } from "@heroui/react";
 import { ImCheckmark, ImCross } from "react-icons/im";
 
 export const AskForConfirmationComponent = () => {
@@ -20,54 +19,39 @@ export const AskForConfirmationComponent = () => {
     const isNeutral = () => makeMove({ type: "VerifyAnswer", isCorrect: false, isNeutral: true });
 
     return (
-        <Center p={"md"} dir={"col"} className={"absolute z-20 inset-0 border-jeopardy-dark  bg-jeopardy"}>
-            <Stack align={"center"}>
-                <Title ta={"center"}>
+        <div className="absolute z-20 inset-0 border-jeopardy-dark bg-jeopardy flex flex-col items-center justify-center p-4">
+            <div className="flex flex-col items-center gap-4">
+                <h3 className="text-center text-xl font-bold text-white">
                     {question.category} - ${question.moneyAmount}
-                </Title>
-                <Text>{question.hint}</Text>
+                </h3>
+                <p className="text-white text-center">{question.hint}</p>
 
                 {providedAnswer ? (
-                    <SimpleGrid cols={2} verticalSpacing={0} spacing={"md"} bdrs={"md"}>
-                        <Box>Your Answer: </Box>
-                        <Box>{providedAnswer}</Box>
-                        <Box>Actual Answer: </Box>
-                        <Box>{actualAnswer}</Box>
-                    </SimpleGrid>
+                    <div className="grid grid-cols-2 gap-4 bg-white/10 p-4 rounded-md">
+                        <div className="text-white font-bold">Your Answer: </div>
+                        <div className="text-white">{providedAnswer}</div>
+                        <div className="text-white font-bold">Actual Answer: </div>
+                        <div className="text-white">{actualAnswer}</div>
+                    </div>
                 ) : (
                     <div className={"text-slate-100 font-semibold text-xl p-6 uppercase text-center"}>
                         {actualAnswer}
                     </div>
                 )}
 
-                <Button.Group ta={"center"}>
+                <div className="flex gap-2">
                     <Button
-                        onClick={isIncorrect}
-                        leftSection={<ImCross />}
-                        color={"red"}
-                        size={"lg"}
-                        // className={buttonStyles({ colors: "error", rounded: "none", class: "rounded-bl-md" })}
+                        onPress={isIncorrect}
+                        className="bg-red-600 text-white"
+                        size="lg"
                     >
-                        Wrong Answer
+                        <ImCross /> Wrong Answer
                     </Button>
-                    <Button onClick={isCorrect} size="lg" color={"green"} leftSection={<ImCheckmark />}>
-                        Correct Answer
+                    <Button onPress={isCorrect} size="lg" className="bg-emerald-600 text-white">
+                        <ImCheckmark /> Correct Answer
                     </Button>
-                </Button.Group>
-                {/*{isNeutral*/}
-                {/*    .map((x) => (*/}
-                {/*        <button*/}
-                {/*            onClick={x}*/}
-                {/*            className={buttonStyles({*/}
-                {/*                class: "rounded-br-md",*/}
-                {/*                rounded: "none",*/}
-                {/*            })}*/}
-                {/*        >*/}
-                {/*            Ambigious*/}
-                {/*        </button>*/}
-                {/*    ))*/}
-                {/*    .extract()}*/}
-            </Stack>
-        </Center>
+                </div>
+            </div>
+        </div>
     );
 };

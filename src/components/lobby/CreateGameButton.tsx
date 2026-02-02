@@ -1,14 +1,14 @@
 import { useCreateGameMutation } from "../../__generated__/create-game.generated";
-import { buttonStyles } from "../../styles/button";
+import { Button } from "@heroui/react";
 
-export interface CreateGameButtonProps {}
+export interface CreateGameButtonProps { }
 
-export const CreateGameButton = ({}: CreateGameButtonProps) => {
+export const CreateGameButton = ({ }: CreateGameButtonProps) => {
     const [createGameResponse, createGame] = useCreateGameMutation();
 
     return (
-        <button className={buttonStyles({ colors: "success" })} onClick={() => createGame({})}>
+        <Button className="bg-emerald-600 text-white" onPress={() => createGame({})}>
             Start Game
-        </button>
+        </Button>
     );
 };

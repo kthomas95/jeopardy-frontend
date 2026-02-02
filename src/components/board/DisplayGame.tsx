@@ -4,7 +4,7 @@ import { DisplayFinalJeopardy } from "./DisplayFinalJeopardy";
 import { DisplayRound } from "./DisplayRound";
 import { PlayerView } from "../../graphql/graphql-types";
 import { useActiveGame, useGameStatus } from "../../api/active-game-context";
-import { flattenStrings } from "../../utils/string/flatten-strings";
+import { cn } from "@heroui/react";
 
 export const DisplayGameSummary = () => {
     const status = useGameStatus();
@@ -31,10 +31,10 @@ export const DisplayGameSummary = () => {
                                 <div className={"p-1 italic font-bold"}>${amountWagered}</div>
                                 <hr className={"text-gray-300/30"} />
                                 <div
-                                    className={flattenStrings([
+                                    className={cn(
                                         "italic p-1.5 text-sm",
                                         wasCorrect ? "text-emerald-600" : "text-red-500",
-                                    ])}
+                                    )}
                                 >
                                     {providedAnswer ? providedAnswer : "No Answer Provided"}
                                 </div>

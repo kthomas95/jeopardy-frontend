@@ -1,8 +1,8 @@
 import { useToggle, useVibrate } from "react-use";
 import { useLayoutEffect } from "react";
-import { buttonStyles } from "../../styles/button";
 import { useActiveGame, useRound } from "../../api/active-game-context";
 import { isTypename } from "./OpponentIsBuzzingComponent";
+import { Button } from "@heroui/react";
 
 export const RenderStringWithNewLines = ({ item, className }: { item: string; className?: string }) =>
     item.split("\n").map((x) => (
@@ -45,9 +45,9 @@ export const SayingAnswerComponent = () => {
                 <p className={"p-1 uppercase"}>
                     <RenderStringWithNewLines item={question.hint} />
                 </p>
-                <button onClick={showAnswer} className={buttonStyles({ colors: "outline", class: "" })}>
+                <Button onPress={showAnswer} variant="bordered" className="text-white border-white">
                     Click Here When You've Stated Your Answer
-                </button>
+                </Button>
             </div>
         </>
     );

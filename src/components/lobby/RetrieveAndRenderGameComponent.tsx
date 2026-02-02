@@ -3,19 +3,16 @@ import { UserAtom } from "../../atoms/user-atom";
 import { useGetGameDateFromServer } from "../../api/useGetGameDateFromServer";
 import { ManagePendingGame } from "./ManagePendingGame";
 import { DisplayGame } from "../board/DisplayGame";
-import { displayColors } from "../../styles/colors";
-import { compose } from "cva";
-import { flattenStrings } from "../../utils/string/flatten-strings";
 import { SetUsername, SetUsernameForm } from "../account/SetUsername";
 import { activeGameContext } from "../../api/active-game-context";
-import { Center, Loader } from "@mantine/core";
+import { cn, Spinner } from "@heroui/react";
 
 const cannotConnectToServer = (
     <div
-        className={flattenStrings([
+        className={cn(
             "inset-0 absolute m-auto p-3 rounded-md shadow-2xl w-64 h-24 flex center text-lg font-semibold",
-            displayColors({ color: "primary" }),
-        ])}
+            "bg-sky-500 text-white",
+        )}
     >
         Loading From Server...
     </div>
@@ -34,9 +31,9 @@ export const RetrieveAndRenderGameComponent = () => {
 
     if (serverResponse.isLoading)
         return (
-            <Center h={"100dvh"}>
-                <Loader size={"xl"} />
-            </Center>
+            <div className="flex h-[100dvh] justify-center items-center">
+                <Spinner size="lg" />
+            </div>
         );
 
     return serverResponse.activeGame

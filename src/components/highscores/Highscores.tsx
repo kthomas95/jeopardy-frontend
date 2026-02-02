@@ -1,6 +1,5 @@
 import React from "react";
 import { useGetHighscoresSubscription } from "../../__generated__/get-highscores.generated";
-import { Text } from "@mantine/core";
 
 export const Highscores = () => {
     const _highscores = useGetHighscoresSubscription()[0].data?.getHighscores ?? [];
@@ -44,9 +43,9 @@ export const Highscores = () => {
                         <React.Fragment key={playerName}>
                             {/*<div className={"font-black"}>{index + 1}.</div>*/}
                             <div className="font-blackd text-slate-300 ">{playerName}</div>
-                            <Text size={"sm"} fs={"italic"}>
+                            <div className="text-sm italic">
                                 {record.won}-{record.lost}
-                            </Text>
+                            </div>
                             <div className={"tracking-tight font-black text-emerald-600"}>
                                 {new Intl.NumberFormat("en-US", {
                                     style: "currency",

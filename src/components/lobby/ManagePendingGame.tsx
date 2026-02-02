@@ -4,20 +4,18 @@ import { JoinGameButton } from "./JoinGameButton";
 import { ResetGameButton } from "./ResetGameButton";
 import { SetUsername } from "../account/SetUsername";
 import { YearRangeSlider } from "./YearRangeSlider";
-import { buttonStyles } from "../../styles/button";
 import { useFinalizePlayersMutation } from "../../__generated__/finalize-players.generated";
 import { ManageCategories } from "./ManageCategories";
 import { Highscores } from "../highscores/Highscores";
 import React from "react";
-import { GameHistory } from "../highscores/GameHistory";
 import { Link } from "@tanstack/react-router";
-import { Badge, Button, MantineColor } from "@mantine/core";
+import { Chip, Button } from "@heroui/react";
 import { PendingGamePlayerView } from "../../graphql/graphql-types";
 import { ManageGameStyle } from "./ManageGameStyle";
 
 export const FinalizePlayers = () => {
     const [, finalizePlayersMutation] = useFinalizePlayersMutation();
-    return <Button onClick={() => finalizePlayersMutation({})}>Finalize Players</Button>;
+    return <Button onPress={() => finalizePlayersMutation({})}>Finalize Players</Button>;
 };
 
 export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePlayerView }) => {
@@ -36,15 +34,16 @@ export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePla
 
             <div className="p-5 bg-slate-700/50 rounded-md shadow-md my-10 mx-3">
                 <h4 className="text-lg font-bold">Current Players</h4>
-                <div className="flex gap-3 p-5">
+                <div className="flex gap-3 p-5 flex-wrap">
                     {names.map((player, index) => (
-                        <Badge
+                        <Chip
+                            key={player}
                             color={
-                                (["cyan", "violet", "pink", "teal", "lime", "blue"] as MantineColor[])[index]
+                                (["default", "primary", "secondary", "success", "warning", "danger"] as const)[index % 6]
                             }
                         >
                             {player}
-                        </Badge>
+                        </Chip>
                     ))}
                 </div>
 

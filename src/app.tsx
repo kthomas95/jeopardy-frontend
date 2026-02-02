@@ -1,13 +1,11 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import "@mantine/core/styles.css";
 import "./styles/tailwind.css";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
 import { Provider } from "urql";
 import { graphqlClient } from "./graphql/graphql-client";
-import { createStore, Provider as JotaiProvider } from "jotai";
-import { MantineProvider } from "@mantine/core";
+import { Provider as JotaiProvider } from "jotai";
 
 const rootElement = document.getElementById("app")!;
 if (!rootElement.innerHTML) {
@@ -15,11 +13,9 @@ if (!rootElement.innerHTML) {
     root.render(
         // <StrictMode>
         <JotaiProvider>
-            <MantineProvider>
-                <Provider value={graphqlClient}>
-                    <RouterProvider router={router} />
-                </Provider>
-            </MantineProvider>
+            <Provider value={graphqlClient}>
+                <RouterProvider router={router} />
+            </Provider>
         </JotaiProvider>,
         // </StrictMode>,
     );

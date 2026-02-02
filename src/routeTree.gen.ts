@@ -8,99 +8,46 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from "./routes/__root"
+import { Route as NameRouteImport } from "./routes/name"
+import { Route as HistoryRouteImport } from "./routes/history"
+import { Route as HighscoresRouteImport } from "./routes/highscores"
+import { Route as IndexRouteImport } from "./routes/index"
+import { Route as GamesIndexRouteImport } from "./routes/games/index"
 
-import { Route as rootRoute } from "./routes/__root"
-import { Route as NameImport } from "./routes/name"
-import { Route as HistoryImport } from "./routes/history"
-import { Route as HighscoresImport } from "./routes/highscores"
-import { Route as IndexImport } from "./routes/index"
-import { Route as GamesIndexImport } from "./routes/games/index"
-
-// Create/Update Routes
-
-const NameRoute = NameImport.update({
+const NameRoute = NameRouteImport.update({
   id: "/name",
   path: "/name",
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const HistoryRoute = HistoryImport.update({
+const HistoryRoute = HistoryRouteImport.update({
   id: "/history",
   path: "/history",
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const HighscoresRoute = HighscoresImport.update({
+const HighscoresRoute = HighscoresRouteImport.update({
   id: "/highscores",
   path: "/highscores",
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: "/",
   path: "/",
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const GamesIndexRoute = GamesIndexImport.update({
+const GamesIndexRoute = GamesIndexRouteImport.update({
   id: "/games/",
   path: "/games/",
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module "@tanstack/react-router" {
-  interface FileRoutesByPath {
-    "/": {
-      id: "/"
-      path: "/"
-      fullPath: "/"
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    "/highscores": {
-      id: "/highscores"
-      path: "/highscores"
-      fullPath: "/highscores"
-      preLoaderRoute: typeof HighscoresImport
-      parentRoute: typeof rootRoute
-    }
-    "/history": {
-      id: "/history"
-      path: "/history"
-      fullPath: "/history"
-      preLoaderRoute: typeof HistoryImport
-      parentRoute: typeof rootRoute
-    }
-    "/name": {
-      id: "/name"
-      path: "/name"
-      fullPath: "/name"
-      preLoaderRoute: typeof NameImport
-      parentRoute: typeof rootRoute
-    }
-    "/games/": {
-      id: "/games/"
-      path: "/games"
-      fullPath: "/games"
-      preLoaderRoute: typeof GamesIndexImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
   "/history": typeof HistoryRoute
   "/name": typeof NameRoute
-  "/games": typeof GamesIndexRoute
+  "/games/": typeof GamesIndexRoute
 }
-
 export interface FileRoutesByTo {
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
@@ -108,31 +55,68 @@ export interface FileRoutesByTo {
   "/name": typeof NameRoute
   "/games": typeof GamesIndexRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   "/": typeof IndexRoute
   "/highscores": typeof HighscoresRoute
   "/history": typeof HistoryRoute
   "/name": typeof NameRoute
   "/games/": typeof GamesIndexRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "/" | "/highscores" | "/history" | "/name" | "/games"
+  fullPaths: "/" | "/highscores" | "/history" | "/name" | "/games/"
   fileRoutesByTo: FileRoutesByTo
   to: "/" | "/highscores" | "/history" | "/name" | "/games"
   id: "__root__" | "/" | "/highscores" | "/history" | "/name" | "/games/"
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HighscoresRoute: typeof HighscoresRoute
   HistoryRoute: typeof HistoryRoute
   NameRoute: typeof NameRoute
   GamesIndexRoute: typeof GamesIndexRoute
+}
+
+declare module "@tanstack/react-router" {
+  interface FileRoutesByPath {
+    "/name": {
+      id: "/name"
+      path: "/name"
+      fullPath: "/name"
+      preLoaderRoute: typeof NameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/history": {
+      id: "/history"
+      path: "/history"
+      fullPath: "/history"
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/highscores": {
+      id: "/highscores"
+      path: "/highscores"
+      fullPath: "/highscores"
+      preLoaderRoute: typeof HighscoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/": {
+      id: "/"
+      path: "/"
+      fullPath: "/"
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/games/": {
+      id: "/games/"
+      path: "/games"
+      fullPath: "/games/"
+      preLoaderRoute: typeof GamesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -142,39 +126,6 @@ const rootRouteChildren: RootRouteChildren = {
   NameRoute: NameRoute,
   GamesIndexRoute: GamesIndexRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/highscores",
-        "/history",
-        "/name",
-        "/games/"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/highscores": {
-      "filePath": "highscores.tsx"
-    },
-    "/history": {
-      "filePath": "history.tsx"
-    },
-    "/name": {
-      "filePath": "name.tsx"
-    },
-    "/games/": {
-      "filePath": "games/index.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

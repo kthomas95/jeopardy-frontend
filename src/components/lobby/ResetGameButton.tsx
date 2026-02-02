@@ -1,6 +1,5 @@
 import { useResetGameMutation } from "../../__generated__/reset-game.generated";
-import { buttonStyles } from "../../styles/button";
-import { Button } from "@mantine/core";
+import { Button } from "@heroui/react";
 
 export const ResetGameButton = () => {
     const [resetGameResponse, resetGameMutation] = useResetGameMutation();
@@ -10,7 +9,7 @@ export const ResetGameButton = () => {
     }
 
     return (
-        <Button color={"red"} onClick={resetGame} className={"shrink-0"}>
+        <Button className="shrink-0 bg-red-600 text-white" onPress={resetGame}>
             Reset Game
         </Button>
     );

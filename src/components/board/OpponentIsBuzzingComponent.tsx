@@ -1,4 +1,4 @@
-import { flattenStrings } from "../../utils/string/flatten-strings";
+import { cn } from "@heroui/react";
 import { useRound } from "../../api/active-game-context";
 
 export const isTypename = <K extends T["__typename"], T extends { __typename: string }>(
@@ -18,10 +18,10 @@ export const OpponentIsBuzzingComponent = () => {
 
     return (
         <div
-            className={flattenStrings([
+            className={cn(
                 opponentIsBuzzing.opponentIsLookingAtAnswer ? "bg-amber-500" : "bg-red-600",
                 "absolute inset-0 z-10 flex gap-5 flex-col center text-white p-5",
-            ])}
+            )}
         >
             <div className={"text-3xl"}>
                 <b>{opponentIsBuzzing.playerBuzzing}</b> is{" "}

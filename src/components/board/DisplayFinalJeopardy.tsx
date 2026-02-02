@@ -1,14 +1,12 @@
-import { renderUnion, unwrapUnion } from "../../utils/unions";
-import { ReactNode, useState } from "react";
-import { buttonStyles } from "../../styles/button";
-import { number } from "zod";
+import { useState } from "react";
+import { z } from "zod";
 import { useActiveGame, useGameStatus } from "../../api/active-game-context";
-import { isTypename } from "./OpponentIsBuzzingComponent";
 import {
     FinalJeopardyProps_AskingForAnswer_Fragment,
     FinalJeopardyProps_AskingForConfirmation_Fragment,
     FinalJeopardyProps_AskingForWager_Fragment,
 } from "../../__generated__/get-active-game.generated";
+import { Button, Input } from "@heroui/react";
 
 const AskingForAnswerComponent = ({ category, clue }: FinalJeopardyProps_AskingForAnswer_Fragment) => {
     const { makeMove } = useActiveGame();
@@ -21,21 +19,21 @@ const AskingForAnswerComponent = ({ category, clue }: FinalJeopardyProps_AskingF
 
     return (
         <div className={"flex grow bg-jeopardy-dark justify-center items-center text-white p-4"}>
-            <div className={"flex flex-col gap-2"}>
+            <div className={"flex flex-col gap-2 w-full max-w-md"}>
                 <div className={"font-bold"}>{category}</div>
                 {clue}
 
                 <div className={"flex flex-col gap-2"}>
-                    <input
+                    <Input
                         type={"text"}
-                        className={"bg-slate-200 text-slate-800 pl-2 py-0.5 shadow-md rounded-md"}
+                        className={"text-black"}
                         value={answer}
                         placeholder={"Enter Your Answer Here"}
                         onChange={(e) => setAnswer(e.target.value)}
                     />
-                    <button className={buttonStyles()} onClick={() => submitAnswer(answer)}>
+                    <Button onPress={() => submitAnswer(answer)}>
                         Submit Answer
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
@@ -59,19 +57,19 @@ const AskingForConfirmationComponent = ({
         >
             <div>Your Answer: {providedAnswer}</div>
             <div>Actual Answer: {actualAnswer}</div>
-            <div className="grid grid-cols-2 gap-3">
-                <button
-                    className={buttonStyles({ colors: "success" })}
-                    onClick={() => submitConfirmation(true)}
+            <div className="grid grid-cols-2 gap-3 mt-4">
+                <Button
+                    className="bg-emerald-600 text-white"
+                    onPress={() => submitConfirmation(true)}
                 >
                     Correct
-                </button>
-                <button
-                    className={buttonStyles({ colors: "error" })}
-                    onClick={() => submitConfirmation(false)}
+                </Button>
+                <Button
+                    className="bg-red-600 text-white"
+                    onPress={() => submitConfirmation(false)}
                 >
                     Incorrect
-                </button>
+                </Button>
             </div>
         </div>
     );
@@ -90,21 +88,21 @@ const AskingForWagerComponent = ({ category }: FinalJeopardyProps_AskingForWager
             <div>
                 The category is <b>{category}</b>
             </div>
-            <div className={"flex flex-col gap-2"}>
+            <div className={"flex flex-col gap-2 w-full max-w-md"}>
                 <div>How much would you like to wager?</div>
-                <input
+                <Input
                     type={"number"}
                     value={amount}
                     onChange={(event) => {
                         setAmount(event.target.value);
                     }}
-                    className={"pl-2 bg-slate-200 text-slate-800 rounded-md shadow-md"}
+                    className={"text-black"}
                 />
-                <button
-                    className={buttonStyles({ colors: "primary" })}
+                <Button
+                    className="bg-sky-500 text-white"
                     type={"submit"}
-                    onClick={() => {
-                        const newAmount = number({ coerce: true })
+                    onPress={() => {
+                        const newAmount = z.coerce.number()
                             .nonnegative()
                             .nullable()
                             .catch(null)
@@ -116,7 +114,7 @@ const AskingForWagerComponent = ({ category }: FinalJeopardyProps_AskingForWager
                     }}
                 >
                     Submit Wager
-                </button>
+                </Button>
             </div>
         </div>
     );

@@ -1,7 +1,6 @@
 import { DisplayCategories } from "./DisplayCategories";
 import { DisplayClues } from "./DisplayClues";
-import { flattenStrings } from "../../utils/string/flatten-strings";
-import { displayColors } from "../../styles/colors";
+import { cn } from "@heroui/react";
 import { CanBuzzComponent } from "./CanBuzzComponent";
 import { SayingAnswerComponent } from "./SayingAnswerComponent";
 import { AskForConfirmationComponent } from "./AskForConfirmationComponent";
@@ -30,20 +29,19 @@ export const DisplayRound = () => {
 
             {round.status.__typename === "SelectingClue" ? (
                 <div
-                    className={flattenStrings([
-                        // displayColors({ color: "success" }),
+                    className={cn(
                         "bg-emerald-600 text-emerald-50",
                         "col-span-6 h-6 font-bold w-max ml-auto rounded-md text-sm italic shadow-md py-1 px-4 flex center",
-                    ])}
+                    )}
                 >
                     You Have Control of the Board
                 </div>
             ) : (
                 <div
-                    className={flattenStrings([
-                        displayColors({ color: "neutral" }),
+                    className={cn(
+                        "bg-gray-100 text-gray-800",
                         "text-sm col-span-6 h-6 rounded-md shadow-md ml-auto w-max flex center py-1 px-4 italic",
-                    ])}
+                    )}
                 >
                     {round.status.__typename === "Waiting" && round.status.message}
                 </div>

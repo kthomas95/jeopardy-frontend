@@ -1,5 +1,5 @@
 import { useActiveGame, useRound } from "../../api/active-game-context";
-import { Button, Text, TextInput, Title } from "@mantine/core";
+import { Button, Input } from "@heroui/react";
 import { useState } from "react";
 
 export const CanProvideManualAnswer = () => {
@@ -12,44 +12,35 @@ export const CanProvideManualAnswer = () => {
 
     if (status.__typename === "CanProvideManualAnswer")
         return (
-            <div className={"absolute inset-0 bg-jeopardy-dark flex center flex-col"}>
-                <Title size={32} p={"md"} ta={"center"}>
+            <div className={"absolute inset-0 bg-jeopardy-dark flex center flex-col justify-center items-center p-4"}>
+                <h2 className="text-2xl font-bold text-center text-white mb-4">
                     {status.question.category} - ${status.question.moneyAmount}
-                </Title>
+                </h2>
 
-                <Text p={"sm"}>{status.question.hint}</Text>
+                <p className="text-white mb-4 p-2">{status.question.hint}</p>
 
-                <Button.Group>
-                    <TextInput
+                <div className="flex gap-2 mb-4 w-full max-w-md">
+                    <Input
                         value={answerValue}
                         onChange={(e) => setAnswerValue(e.target.value)}
                         placeholder={"Answer"}
-                        variant={"default"}
-                        color={"white"}
-                        wrapperProps={{ color: "white" }}
-                        classNames={{ input: "!rounded-r-none" }}
+                        className="flex-grow rounded-r-none"
                     />
                     <Button
-                        disabled={answerValue === ""}
-                        onClick={() => {
+                        isDisabled={answerValue === ""}
+                        onPress={() => {
                             makeMove({ type: "ProvideAnswer", answer: answerValue });
                             setAnswerValue("");
                         }}
                     >
                         Submit Answer
                     </Button>
-                </Button.Group>
+                </div>
 
                 <Button
-                    color={"red"}
-                    fullWidth
-                    onClick={() => makeMove({ type: "NoIdea" })}
-                    pos={"absolute"}
-                    bottom={0}
-                    h={64}
-                    size={"xl"}
-                    disabled={answerValue !== ""}
-                    classNames={{ root: "!rounded-t-none disabled:opacity-0" }}
+                    onPress={() => makeMove({ type: "NoIdea" })}
+                    className="absolute bottom-0 h-16 rounded-t-none text-xl w-full bg-red-600 text-white"
+                    isDisabled={answerValue !== ""}
                 >
                     NO IDEA
                 </Button>

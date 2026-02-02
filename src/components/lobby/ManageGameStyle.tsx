@@ -1,13 +1,13 @@
 import { GameStyle } from "../../graphql/graphql-types";
 import { FC } from "react";
-import { SegmentedControl, SegmentedControlItem, Stack, Title } from "@mantine/core";
 import { useSetGameStyleMutation } from "../../__generated__/set-game-style.generated";
+import { Tab, TabList, Tabs } from "@heroui/react";
 
 interface ManageGameStyleProps {
     style: GameStyle;
 }
 
-const segmentedData: SegmentedControlItem[] = [
+const segmentedData = [
     { value: GameStyle.Manual, label: "Manual" },
     { value: GameStyle.StandardFastest, label: "Standard" },
     // { value: GameStyle.StandardRandom, label: "Standard - Random" },
@@ -22,19 +22,23 @@ export const ManageGameStyle: FC<ManageGameStyleProps> = ({ style }) => {
     }
 
     return (
-        <Stack pb={"xl"}>
-            <Title order={5} size={"md"}>
-                Game Style
-            </Title>
+        <div className="pb-5">
+            <h5 className="font-bold text-md mb-2">Game Style</h5>
 
-            <SegmentedControl
-                data={segmentedData}
-                value={style}
-                color={"blue"}
-                // orientation={"vertical"}
+            <Tabs
+                aria-label="Game Style"
+                selectedKey={style}
+                onSelectionChange={(key) => updateGameStyle(key as GameStyle)}
                 fullWidth
-                onChange={(value) => updateGameStyle(value as GameStyle)}
-            />
-        </Stack>
+            >
+                <TabList className="flex w-full" items={segmentedData}>
+                    {(item) => (
+                        <Tab id={item.value} className="flex-1 text-center py-2 cursor-pointer data-[selected=true]:border-b-2 data-[selected=true]:border-primary data-[selected=true]:text-primary">
+                            {item.label}
+                        </Tab>
+                    )}
+                </TabList>
+            </Tabs>
+        </div>
     );
 };
