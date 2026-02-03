@@ -16,8 +16,8 @@ export default defineConfig({
                 name: "Jeopardy",
                 short_name: "Jeopardy",
                 description: "Jeopardy",
-                theme_color: "#1e40af", // blue-800
-                background_color: "#1e40af",
+                theme_color: "#1e293b", // dark mode background (slate-800 equivalent)
+                background_color: "#1e293b",
                 display: "standalone",
                 icons: [
                     {
