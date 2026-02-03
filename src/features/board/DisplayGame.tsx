@@ -4,7 +4,7 @@ import { DisplayFinalJeopardy } from "./DisplayFinalJeopardy";
 import { DisplayRound } from "./DisplayRound";
 import { PlayerView } from "../../graphql/graphql-types";
 import { useActiveGame, useGameStatus } from "../game/active-game-context";
-import { cn } from "@heroui/react";
+import { cn, Separator } from "@heroui/react";
 
 export const DisplayGameSummary = () => {
     const status = useGameStatus();
@@ -12,15 +12,16 @@ export const DisplayGameSummary = () => {
     return status
         .filter((x) => x.__typename === "Over")
         .map(({ winner, fjSummaries, fj }) => (
-            <div className={"flex grow bg-jeopardy-dark items-center justify-center"}>
+            <div className={"flex grow bg-jeopardy-dark items-center justify-center p-4"}>
                 <div className={"flex flex-col text-center"}>
                     <div className={"text-2xl"}>
                         <span className={"font-black"}>{winner}</span> has won!
                     </div>
                     <div className={"rounded-md ring-1 p-4 ring-gray-300/30 my-4 mx-1"}>
-                        <div className={""}>{fj.hint}</div>
-                        <hr className={"text-gray-300/30 my-3"} />
-                        <div>{fj.answer}</div>
+                        <div className={"text-sm opacity-80"}>{fj.hint}</div>
+                        <Separator className="bg-gray-300/30 my-3" />
+                        {/* <hr className={"text-gray-300/30 my-3"} /> */}
+                        <div className={"font-bold"}>{fj.answer}</div>
                     </div>
                     <div className={"p-2 flex gap-4 my-5 justify-center"}>
                         {fjSummaries.map(({ name, amountWagered, providedAnswer, wasCorrect }) => (
@@ -29,7 +30,6 @@ export const DisplayGameSummary = () => {
                                     {name}
                                 </div>
                                 <div className={"p-1 italic font-bold"}>${amountWagered}</div>
-                                <hr className={"text-gray-300/30"} />
                                 <div
                                     className={cn(
                                         "italic p-1.5 text-sm",

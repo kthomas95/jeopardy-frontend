@@ -30,7 +30,7 @@ const AskingForAnswerComponent = ({ category, clue }: FinalJeopardyProps_AskingF
                         placeholder={"Enter Your Answer Here"}
                         onChange={(e) => setAnswer(e.target.value)}
                     />
-                    <Button onPress={() => submitAnswer(answer)}>
+                    <Button variant="tertiary" className="ml-auto" onPress={() => submitAnswer(answer)}>
                         Submit Answer
                     </Button>
                 </div>
@@ -64,7 +64,7 @@ const AskingForConfirmationComponent = ({
                     Correct
                 </Button>
                 <Button
-                    className="bg-red-600 text-white"
+                    className="bg-red-700 text-white"
                     onPress={() => submitConfirmation(false)}
                 >
                     Incorrect
@@ -97,8 +97,9 @@ const AskingForWagerComponent = ({ category }: FinalJeopardyProps_AskingForWager
                     }}
                 />
                 <Button
-                    className="bg-sky-500 text-white"
+                    variant="tertiary"
                     type={"submit"}
+                    className="ml-auto"
                     onPress={() => {
                         const newAmount = z.coerce.number()
                             .nonnegative()
