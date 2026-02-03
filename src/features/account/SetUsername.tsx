@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { UserAtom } from "../../atoms/user-atom";
+import { UserAtom } from "./user-atom";
 import { useState } from "react";
 import { Button, Input, Popover, PopoverContent, PopoverTrigger } from "@heroui/react";
 import { CgProfile } from "react-icons/cg";
@@ -30,14 +30,14 @@ export const SetUsername = () => {
     const [username, setUserName] = useState(name ?? "");
 
     return (
-        <Popover placement="bottom">
+        <Popover>
             <PopoverTrigger>
                 <div className="flex items-center gap-2 ml-auto cursor-pointer">
                     <CgProfile />
                     {username || "Set Name"}
                 </div>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent placement="bottom">
                 <SetUsernameForm />
             </PopoverContent>
         </Popover>

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SetUsernameForm } from "../components/account/SetUsername";
+import { SetUsernameForm } from "../features/account/SetUsername";
 
 export const Route = createFileRoute("/name")({
     component: RouteComponent,

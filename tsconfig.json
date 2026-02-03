@@ -1,7 +1,11 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "lib": ["DOM", "dom.iterable", "esnext"],
+        "lib": [
+            "DOM",
+            "dom.iterable",
+            "esnext"
+        ],
         "allowJs": true,
         "noPropertyAccessFromIndexSignature": false,
         "skipLibCheck": true,
@@ -16,12 +20,15 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
-        "baseUrl": "./src",
         "incremental": true,
-        "typeRoots": ["./src/**/*.d.ts"],
+        "typeRoots": [
+            "./src/**/*.d.ts"
+        ],
         "strictBindCallApply": true
     },
-    "exclude": ["node_modules"],
+    "exclude": [
+        "node_modules"
+    ],
     "include": [
         "**/*.ts",
         "**/*.tsx",

@@ -9,7 +9,7 @@ export const ResetGameButton = () => {
     }
 
     return (
-        <Button className="shrink-0 bg-red-600 text-white" onPress={resetGame}>
+        <Button variant="danger-soft" onPress={resetGame}>
             Reset Game
         </Button>
     );

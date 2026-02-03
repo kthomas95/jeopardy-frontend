@@ -1,11 +1,11 @@
 import { useAtomValue } from "jotai";
-import { UserAtom } from "../../atoms/user-atom";
-import { useGetGameDateFromServer } from "../../api/useGetGameDateFromServer";
 import { ManagePendingGame } from "./ManagePendingGame";
 import { DisplayGame } from "../board/DisplayGame";
 import { SetUsername, SetUsernameForm } from "../account/SetUsername";
-import { activeGameContext } from "../../api/active-game-context";
 import { cn, Spinner } from "@heroui/react";
+import { UserAtom } from "../account/user-atom";
+import { useGetGameDateFromServer } from "../game/useGetGameDateFromServer";
+import { activeGameContext } from "../game/active-game-context";
 
 const cannotConnectToServer = (
     <div

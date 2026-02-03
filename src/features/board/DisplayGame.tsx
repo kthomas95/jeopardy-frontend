@@ -3,7 +3,7 @@ import { DisplayPlayers } from "./DisplayPlayers";
 import { DisplayFinalJeopardy } from "./DisplayFinalJeopardy";
 import { DisplayRound } from "./DisplayRound";
 import { PlayerView } from "../../graphql/graphql-types";
-import { useActiveGame, useGameStatus } from "../../api/active-game-context";
+import { useActiveGame, useGameStatus } from "../game/active-game-context";
 import { cn } from "@heroui/react";
 
 export const DisplayGameSummary = () => {

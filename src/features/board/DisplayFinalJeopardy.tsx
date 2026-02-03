@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { z } from "zod";
-import { useActiveGame, useGameStatus } from "../../api/active-game-context";
+import { useActiveGame, useGameStatus } from "../game/active-game-context";
 import {
     FinalJeopardyProps_AskingForAnswer_Fragment,
     FinalJeopardyProps_AskingForConfirmation_Fragment,

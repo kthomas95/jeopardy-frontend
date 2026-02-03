@@ -6,7 +6,7 @@ import { SayingAnswerComponent } from "./SayingAnswerComponent";
 import { AskForConfirmationComponent } from "./AskForConfirmationComponent";
 import { AskForWager } from "./AskForWager";
 import { OpponentIsBuzzingComponent } from "./OpponentIsBuzzingComponent";
-import { useGameStatus } from "../../api/active-game-context";
+import { useGameStatus } from "../game/active-game-context";
 import { OpponentHasDailyDoubleComponent } from "./OpponentHasDailyDoubleComponent";
 import { CanProvideManualAnswer } from "./CanProvideManualAnswer";
 

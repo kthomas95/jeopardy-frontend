@@ -1,5 +1,5 @@
 import { cn } from "@heroui/react";
-import { useActiveGame } from "../../api/active-game-context";
+import { useActiveGame } from "../game/active-game-context";
 
 export const DisplayPlayers = () => {
     const players = useActiveGame().players;

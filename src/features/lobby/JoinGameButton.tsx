@@ -1,6 +1,6 @@
 import { useJoinGameMutation } from "../../__generated__/join-game.generated";
 import { useAtomValue } from "jotai";
-import { UserAtom } from "../../atoms/user-atom";
+import { UserAtom } from "../account/user-atom";
 import { Button } from "@heroui/react";
 
 export const JoinGameButton = () => {

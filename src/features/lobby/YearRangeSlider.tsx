@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSetYearRangeMutation } from "../../__generated__/set-year-range.generated";
-import { Slider } from "@heroui/react";
+import { Slider, SliderOutput, SliderThumb, SliderTrack } from "@heroui/react";
 
 export interface YearRangeSliderProps {
     yearRange: number[];
@@ -23,7 +23,7 @@ export const YearRangeSlider = ({ yearRange }: YearRangeSliderProps) => {
     return (
         <div className={"flex flex-col pt-5 px-2"}>
             <Slider
-                label="Year Range"
+                aria-label="Year Range"
                 value={localRangeState}
                 minValue={1984}
                 maxValue={2025}
@@ -37,7 +37,20 @@ export const YearRangeSlider = ({ yearRange }: YearRangeSliderProps) => {
                         setYearRange({ yearRange: val });
                     }
                 }}
-            />
+            >
+                <Slider.Track>
+                    {({ state }) => (
+                        <>
+                            <Slider.Fill />
+                            {state.values.map((value, i) => (
+                                <Slider.Thumb key={i} index={i}>
+                                    <div className="-translate-y-full absolute text-sm font-bold pb-0.5">{value}</div>
+                                </Slider.Thumb>
+                            ))}
+                        </>
+                    )}
+                </Slider.Track>
+            </Slider>
         </div>
     );
 };

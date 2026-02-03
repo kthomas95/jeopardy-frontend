@@ -1,6 +1,6 @@
-import { useActiveGame, useRound } from "../../api/active-game-context";
+import { useActiveGame, useRound } from "../game/active-game-context";
 import { isTypename } from "./OpponentIsBuzzingComponent";
-import { Button, Modal } from "@heroui/react";
+import { Button, Description, Label, Modal } from "@heroui/react";
 import { ImCheckmark, ImCross } from "react-icons/im";
 
 export const AskForConfirmationComponent = () => {
@@ -29,7 +29,7 @@ export const AskForConfirmationComponent = () => {
                             </Modal.Heading>
                         </Modal.Header>
                         <Modal.Body className="items-center gap-6">
-                            <p className="text-center text-lg">{question.hint}</p>
+                            <Description className="text-center block">{question.hint}</Description>
 
                             {providedAnswer ? (
                                 <div className="grid grid-cols-2 gap-x-8 gap-y-2 p-4 rounded-md w-full">
@@ -39,7 +39,7 @@ export const AskForConfirmationComponent = () => {
                                     <div className="">{actualAnswer}</div>
                                 </div>
                             ) : (
-                                <div className={"font-semibold text-xl p-6 uppercase text-center"}>
+                                <div className={"font-semibold text-xl text-foreground p-6 uppercase text-center"}>
                                     {actualAnswer}
                                 </div>
                             )}

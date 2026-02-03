@@ -1,8 +1,8 @@
 import { useAtomValue } from "jotai";
-import { UserAtom } from "../../atoms/user-atom";
+import { UserAtom } from "../account/user-atom";
 import { TimerIndicator } from "../common/TimerIndicator";
 import { RenderStringWithNewLines } from "./SayingAnswerComponent";
-import { useActiveGame, useRound } from "../../api/active-game-context";
+import { useActiveGame, useRound } from "../game/active-game-context";
 import { isTypename } from "./OpponentIsBuzzingComponent";
 import { Button } from "@heroui/react";
 
@@ -29,7 +29,7 @@ export const CanBuzzComponent = () => {
         >
             <Button
                 onPress={buzz}
-                className={"grow flex flex-col gap-2 h-auto w-full whitespace-normal bg-jeopardy-light text-white rounded-none data-[hover=true]:bg-jeopardy-light/80"}
+                className={"grow flex flex-col gap-2 h-auto w-full whitespace-normal bg-jeopardy text-white rounded-none data-[hover=true]:bg-jeopardy-light/80"}
             >
                 <h4 className={"font-black text-lg"}>
                     {question.category} - ${question.moneyAmount}

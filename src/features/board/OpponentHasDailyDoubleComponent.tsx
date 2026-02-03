@@ -1,4 +1,4 @@
-import { useRound } from "../../api/active-game-context";
+import { useRound } from "../game/active-game-context";
 import { isTypename } from "./OpponentIsBuzzingComponent";
 
 export const OpponentHasDailyDoubleComponent = () => {

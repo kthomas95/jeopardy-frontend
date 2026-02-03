@@ -1,7 +1,7 @@
 import { cn, Button } from "@heroui/react";
 import { Maybe } from "purify-ts";
 import { AvailableCluesPropsFragment } from "../../__generated__/get-active-game.generated";
-import { useActiveGame, useRound } from "../../api/active-game-context";
+import { useActiveGame, useRound } from "../game/active-game-context";
 import { motion } from "framer-motion";
 interface ClueSquareProps {
     clue: Maybe<AvailableCluesPropsFragment>;

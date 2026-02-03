@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { z } from "zod";
-import { useActiveGame, useRound } from "../../api/active-game-context";
+import { useActiveGame, useRound } from "../game/active-game-context";
 import { isTypename } from "./OpponentIsBuzzingComponent";
 import { Button, Input, Modal, Slider } from "@heroui/react";
 

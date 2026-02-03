@@ -13,20 +13,21 @@ export const ManageCategories = ({ categories }: ManageCategoriesProps) => {
     const selectedCategories = categories.filter((x) => x.isSelected).length;
 
     return (
-        <div className={"bg-slate-800 text-slate-200 h-dvh flex flex-col p-8 gap-5"}>
+        <div className={"h-dvh flex flex-col p-2 gap-4"}>
             <div className="font-semibold">{selectedCategories}/12 Categories Selected</div>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 p-3 overflow-y-scroll">
                 {categories.map(({ date, title, isSelected }) => (
                     <Button
                         key={title}
                         onPress={() => toggleCategory({ date, title })}
+                        variant={isSelected ? "primary" : "tertiary"}
                         className={cn(
-                            "h-22 h-auto py-4 gap-2 flex flex-col items-center justify-center rounded-md transition-colors whitespace-normal",
-                            isSelected ? "bg-sky-500 text-white" : "bg-slate-700 text-slate-200 hover:bg-slate-600",
+                            "h-24 py-4 gap-2 flex flex-col whitespace-normal",
                         )}
+                        fullWidth
                     >
                         <div>{title}</div>
-                        <div>{date}</div>
+                        <div className="text-xs italic opacity-80">{date}</div>
                     </Button>
                 ))}
             </div>

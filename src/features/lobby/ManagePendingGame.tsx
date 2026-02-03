@@ -1,5 +1,5 @@
 import { useAtomValue } from "jotai";
-import { UserAtom } from "../../atoms/user-atom";
+import { UserAtom } from "../account/user-atom";
 import { JoinGameButton } from "./JoinGameButton";
 import { ResetGameButton } from "./ResetGameButton";
 import { SetUsername } from "../account/SetUsername";
@@ -9,13 +9,15 @@ import { ManageCategories } from "./ManageCategories";
 import { Highscores } from "../highscores/Highscores";
 import React from "react";
 import { Link } from "@tanstack/react-router";
-import { Chip, Button } from "@heroui/react";
+import { Chip, Button, Card, Separator, Header } from "@heroui/react";
 import { PendingGamePlayerView } from "../../graphql/graphql-types";
 import { ManageGameStyle } from "./ManageGameStyle";
 
 export const FinalizePlayers = () => {
     const [, finalizePlayersMutation] = useFinalizePlayersMutation();
-    return <Button onPress={() => finalizePlayersMutation({})}>Finalize Players</Button>;
+    return <Button className="bg-emerald-700 hover:bg-emerald-600" onPress={() => finalizePlayersMutation({})}>
+        Start Game
+    </Button>;
 };
 
 export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePlayerView }) => {
@@ -32,31 +34,46 @@ export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePla
         <div className="p-3 min-h-dvh">
             <SetUsername />
 
-            <div className="p-5 bg-slate-700/50 rounded-md shadow-md my-10 mx-3">
-                <h4 className="text-lg font-bold">Current Players</h4>
-                <div className="flex gap-3 p-5 flex-wrap">
-                    {names.map((player, index) => (
-                        <Chip
-                            key={player}
-                            color={
-                                (["default", "primary", "secondary", "success", "warning", "danger"] as const)[index % 6]
-                            }
-                        >
-                            {player}
-                        </Chip>
-                    ))}
-                </div>
+            <Card className="my-10">
+                <Card.Header>
+                    <Card.Title>
+                        Start New Game
+                    </Card.Title>
+                </Card.Header>
+                <Card.Content>
+                    <h4 className="text-lg font-bold">Current Players</h4>
+                    {names.length === 0 ? <div>No Players Yet</div> :
+                        <div className="flex gap-3 flex-wrap">
+                            {names.map((player, index) => (
+                                <Chip
+                                    key={player}
+                                    color={
+                                        (["accent", "success", "secondary", "success", "warning", "danger"] as const)[
+                                        index % 6
+                                        ] as any
+                                    }
+                                >
+                                    {player}
+                                </Chip>
+                            ))}
+                        </div>}
 
-                <ManageGameStyle style={pendingGame.gameStyle} />
+                    <Separator className="my-5" />
 
-                <YearRangeSlider yearRange={pendingGame.yearRange} />
+                    <ManageGameStyle style={pendingGame.gameStyle} />
 
-                <div className="flex gap-3 p-3">
-                    {canJoin ? <JoinGameButton /> : <FinalizePlayers />}
-                    <hr className={"ml-auto"} />
+                    <Separator className="my-5" />
+
+                    <YearRangeSlider yearRange={pendingGame.yearRange} />
+
+                </Card.Content>
+                <Card.Footer className="mt-5">
                     <ResetGameButton />
-                </div>
-            </div>
+                    <hr className={"ml-auto"} />
+                    {canJoin ? <JoinGameButton /> : <FinalizePlayers />}
+
+                </Card.Footer>
+            </Card>
 
             <hr className={"my-4 mx-5 opacity-50"} />
 
@@ -66,6 +83,6 @@ export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePla
                     Full Game History
                 </Link>
             </div>
-        </div>
+        </div >
     );
 };

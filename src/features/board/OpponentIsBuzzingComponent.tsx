@@ -1,5 +1,5 @@
 import { cn } from "@heroui/react";
-import { useRound } from "../../api/active-game-context";
+import { useRound } from "../game/active-game-context";
 
 export const isTypename = <K extends T["__typename"], T extends { __typename: string }>(
     x: T,

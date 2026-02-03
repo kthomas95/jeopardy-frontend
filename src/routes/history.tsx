@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { GameHistory } from "../components/highscores/GameHistory";
+import { GameHistory } from "../features/highscores/GameHistory";
 
 export const Route = createFileRoute("/history")({
     component: RouteComponent,

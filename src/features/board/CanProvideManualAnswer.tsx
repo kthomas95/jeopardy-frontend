@@ -1,4 +1,4 @@
-import { useActiveGame, useRound } from "../../api/active-game-context";
+import { useActiveGame, useRound } from "../game/active-game-context";
 import { Button, Input, Modal } from "@heroui/react";
 import { useState } from "react";
 
@@ -29,7 +29,6 @@ export const CanProvideManualAnswer = () => {
                                 onChange={(e) => setAnswerValue(e.target.value)}
                                 placeholder={"Type your answer..."}
                                 className="max-w-md"
-                                size="lg"
                             />
                         </Modal.Body>
                         <Modal.Footer>

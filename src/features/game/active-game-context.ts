@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { PlayerViewPropsFragment, RoundViewPropsFragment } from "../__generated__/get-active-game.generated";
+import { PlayerViewPropsFragment, RoundViewPropsFragment } from "../../__generated__/get-active-game.generated";
 import { Maybe } from "purify-ts";
 import { MakeMove } from "./useGetGameDateFromServer";
 
