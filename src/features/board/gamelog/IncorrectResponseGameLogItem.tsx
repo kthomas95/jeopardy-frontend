@@ -1,3 +1,4 @@
+import { Separator } from "@heroui/react";
 import { GameLog_IncorrectResponse_Fragment } from "../../../__generated__/get-active-game.generated";
 
 export const IncorrectResponseGameLogItem = ({
@@ -8,7 +9,7 @@ export const IncorrectResponseGameLogItem = ({
 }: GameLog_IncorrectResponse_Fragment) => (
     <div
         className={
-            "h-full ring-2 ring-red-500/50 bg-red-300/10 rounded-md shadow-md p-0.5 lg:p-1 text-white flex flex-col w-full gap-1 justify-center"
+            "h-full ring-2 ring-red-500/50 bg-red-300/10 rounded-md shadow-md p-0.5 lg:p-1 text-white flex flex-col w-full gap-2 items-center text-center justify-center"
         }
     >
         <div className={"font-semibold text-sm uppercase line-clamp-2"}>{hint}</div>

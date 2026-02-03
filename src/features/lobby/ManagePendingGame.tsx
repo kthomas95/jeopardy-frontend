@@ -31,19 +31,23 @@ export const ManagePendingGame = ({ pendingGame }: { pendingGame: PendingGamePla
         return <ManageCategories categories={pendingGame.pendingCategories} />;
 
     return (
-        <div className="p-3 min-h-dvh">
+        <div className="p-3 flex flex-col">
             <SetUsername />
 
-            <Card className="my-10">
+            <Card className="my-3">
                 <Card.Header>
                     <Card.Title>
-                        Start New Game
+                        <div className="text-lg">
+
+                            Start New Game
+                        </div>
                     </Card.Title>
                 </Card.Header>
                 <Card.Content>
-                    <h4 className="text-lg font-bold">Current Players</h4>
-                    {names.length === 0 ? <div>No Players Yet</div> :
-                        <div className="flex gap-3 flex-wrap">
+                    <Separator className="mb-3" />
+                    <h4 className="font-bold pb-3 text-sm">Current Players</h4>
+                    {names.length === 0 ? <div className="text-xs italic h-8 opacity-80">No Players Yet</div> :
+                        <div className="flex gap-3 flex-wrap min-h-8">
                             {names.map((player, index) => (
                                 <Chip
                                     key={player}

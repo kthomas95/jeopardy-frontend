@@ -16,8 +16,8 @@ const Clue = ({ clue, selectClue }: ClueSquareProps) => {
                 onPress={selectClue.extract()}
                 isDisabled={selectClue.isNothing() ?? true}
                 className={cn(
-                    moneyAmount ? "" : "opacity-0",
-                    aboutToBeShown ? "bg-slate-200 text-jeopardy" : "bg-jeopardy/80",
+                    moneyAmount ? "" : "opacity-40",
+                    "disabled:opacity-100 bg-jeopardy-dark",
                     "text-blue-100 !font-black text-xl shadow-md rounded-md flex center h-full w-full",
                 )}
             >

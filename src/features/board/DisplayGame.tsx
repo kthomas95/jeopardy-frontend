@@ -50,10 +50,6 @@ export const DisplayGameSummary = () => {
 export const DisplayGame = () => {
     return (
         <div className={"bg-slate-800 text-slate-100 h-dvh w-dvw overflow-hidden flex flex-col"}>
-            {/*{round*/}
-            {/*    .map((x) => <DisplayRound round={x} />)*/}
-            {/*    .alt(finalJeopardy.map((x) => <DisplayFinalJeopardy {...x} />))*/}
-            {/*    .orDefault(<div>The game is over.</div>)}*/}
             <DisplayRound />
 
             <DisplayFinalJeopardy />

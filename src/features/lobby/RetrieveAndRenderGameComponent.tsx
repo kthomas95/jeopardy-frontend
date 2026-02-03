@@ -2,7 +2,7 @@ import { useAtomValue } from "jotai";
 import { ManagePendingGame } from "./ManagePendingGame";
 import { DisplayGame } from "../board/DisplayGame";
 import { SetUsername, SetUsernameForm } from "../account/SetUsername";
-import { cn, Spinner } from "@heroui/react";
+import { cn, Form, Spinner } from "@heroui/react";
 import { UserAtom } from "../account/user-atom";
 import { useGetGameDateFromServer } from "../game/useGetGameDateFromServer";
 import { activeGameContext } from "../game/active-game-context";
@@ -24,9 +24,9 @@ export const RetrieveAndRenderGameComponent = () => {
 
     if (name === "")
         return (
-            <div className="p-3">
+            <Form className="p-3 flex flex-col gap-3 max-w-64 mx-auto my-auto">
                 <SetUsernameForm />
-            </div>
+            </Form>
         );
 
     if (serverResponse.isLoading)
